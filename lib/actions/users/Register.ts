@@ -4,7 +4,7 @@ import { ErrorResponse } from "@/lib/types/ErrorResponse";
 import {
 	RegistrationError,
 	RegistrationSchema,
-} from "@/lib/types/Registration";
+} from "@/lib/types/RegistrationTypes";
 import { UserResource } from "@/lib/types/UserResource";
 import { AxiosError, isAxiosError } from "axios";
 
