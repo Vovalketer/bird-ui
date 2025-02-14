@@ -28,14 +28,14 @@ export default async function register(signUp: unknown) {
 		return { success: true };
 	} catch (error) {
 		if (isAxiosError(error)) {
-			const err: AxiosError<ErrorResponse[]> = error;
-			err.response?.data.forEach((error) => {
+			const err: AxiosError<ErrorResponse> = error;
+			err.response?.data.errors.forEach((error) => {
 				errors.push({ id: error.title, message: error.detail });
 			});
 		} else {
 			errors.push({
 				id: "Unknown error",
-				message: "An unknown error occurred",
+				message: "An unknown error has occurred",
 			});
 		}
 		return { success: false, errors };

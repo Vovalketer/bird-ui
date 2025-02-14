@@ -1,4 +1,7 @@
 export interface ErrorResponse {
+	errors: ErrorResource[];
+}
+export interface ErrorResource {
 	status: string;
 	title: string;
 	detail: string;
