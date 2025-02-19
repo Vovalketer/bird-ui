@@ -1,19 +1,15 @@
 "use client";
 
 import PostCard from "@/components/ui/PostCard";
-import { fetcher } from "@/lib/fetcher";
+import { usePost } from "@/lib/services/queries";
 import { PostResource } from "@/lib/types/PostResource";
 import { ResourceResponse } from "@/lib/types/ResourceResponse";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 
 export default function Post() {
 	const { id } = useParams();
-	const { data } = useSWR(
-		`/api/posts/${id}`,
-		fetcher<ResourceResponse<PostResource>>,
-	);
+	const { data } = usePost(id as string);
 	const [resource, setResource] = useState<
 		ResourceResponse<PostResource> | undefined
 	>(undefined);
