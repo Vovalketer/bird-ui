@@ -13,7 +13,7 @@ export interface PostResource extends ResourceIdentifier<number> {
 interface PostAttributes {
 	text: string;
 	replyType: "EVERYONE" | "FOLLOWERS" | "MENTIONS";
-	createdAt: Date;
+	createdAt: string;
 }
 
 interface PostRelationships {

@@ -10,8 +10,8 @@ export interface UserAttributes {
 	username: string;
 	handle: string;
 	bio?: string;
-	dateOfBirth?: Date;
+	dateOfBirth?: string;
 	location?: string;
 	profileImage?: string;
-	createdAt: Date;
+	createdAt: string;
 }
