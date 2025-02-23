@@ -1,4 +1,4 @@
-import { Interactions } from "@/lib/types/PostResourceMetadata";
+import { Interactions } from "@/lib/types/external/postApi";
 import { ChatBubbleLeftIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 interface PostInteractionProps {
