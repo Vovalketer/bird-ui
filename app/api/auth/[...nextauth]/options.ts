@@ -1,8 +1,8 @@
-import { axiosInstance } from "@/lib/fetcher";
-import { ErrorResponse } from "@/lib/types/ErrorResponse";
-import { LoginResponse, LoginSchema } from "@/lib/types/LoginTypes";
-import { ResourceResponse } from "@/lib/types/ResourceResponse";
-import { UserResource } from "@/lib/types/UserResource";
+import { axiosClient } from "@/lib/services/api/birdApi";
+import { ApiResponse } from "@/lib/types/external/common";
+import { ErrorResponse } from "@/lib/types/external/error";
+import { LoginResponse, LoginSchema } from "@/lib/types/external/login";
+import { UserResource } from "@/lib/types/external/userApi";
 import { AxiosError, isAxiosError } from "axios";
 import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -28,15 +28,15 @@ export const options: NextAuthOptions = {
 				if (!parsedCredentials.success) {
 					throw new Error("Invalid credentials format");
 				}
-				const res = await axiosInstance
+				const res = await axiosClient
 					.post<LoginResponse>("/api/auth/login", parsedCredentials.data)
 					.catch(catchError);
 
 				if (!res || res.status !== 200 || !res.data) {
 					return null;
 				}
-				const userRes = await axiosInstance
-					.get<ResourceResponse<UserResource>>("/api/users", {
+				const userRes = await axiosClient
+					.get<ApiResponse<UserResource>>("/api/users", {
 						headers: { Authorization: `Bearer ${res.data.accessToken}` },
 					})
 					.catch(catchError);
