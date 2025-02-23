@@ -1,6 +1,4 @@
-import { ResourceLinks } from "./Links";
-import { ResourceIdentifier } from "./ResourceIdentifier";
-import { RelationshipToOne } from "./ResourceRelationships";
+import { RelationshipToOne, ResourceIdentifier, ResourceLinks } from "./common";
 
 export interface MediaResource extends ResourceIdentifier<number> {
 	attributes: MediaAttributes;

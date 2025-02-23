@@ -1,7 +1,9 @@
-import { ResourceLinks } from "./Links";
-import { PostResourceMetadata } from "./PostResourceMetadata";
-import { ResourceIdentifier } from "./ResourceIdentifier";
-import { RelationshipToMany, RelationshipToOne } from "./ResourceRelationships";
+import {
+	RelationshipToMany,
+	RelationshipToOne,
+	ResourceIdentifier,
+	ResourceLinks,
+} from "./common";
 
 export interface PostResource extends ResourceIdentifier<number> {
 	attributes: PostAttributes;
@@ -13,11 +15,23 @@ export interface PostResource extends ResourceIdentifier<number> {
 interface PostAttributes {
 	text: string;
 	replyType: "EVERYONE" | "FOLLOWERS" | "MENTIONS";
-	createdAt: string;
+	createdAt: string | Date;
 }
 
 interface PostRelationships {
 	user: RelationshipToOne<string>;
 	parent?: RelationshipToOne<number>;
 	media?: RelationshipToMany<number>;
+}
+
+export interface PostResourceMetadata {
+	interactions: Interactions;
+}
+
+export interface Interactions {
+	repliesCount: number;
+	likesCount: number;
+	repostsCount: number;
+	isLiked: boolean;
+	isReposted: boolean;
 }

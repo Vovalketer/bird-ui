@@ -1,5 +1,4 @@
-import { ResourceLinks } from "./Links";
-import { ResourceIdentifier } from "./ResourceIdentifier";
+import { ResourceIdentifier, ResourceLinks } from "./common";
 
 export interface UserResource extends ResourceIdentifier<string> {
 	attributes: UserAttributes;
@@ -10,8 +9,8 @@ export interface UserAttributes {
 	username: string;
 	handle: string;
 	bio?: string;
-	dateOfBirth?: string;
+	dateOfBirth?: string | Date;
 	location?: string;
 	profileImage?: string;
-	createdAt: string;
+	createdAt: string | Date;
 }
