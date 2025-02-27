@@ -1,4 +1,4 @@
-import { axiosClient } from "@/lib/services/api/birdApi";
+import { axiosClient } from "@/lib/services/api/birdApiServer";
 import { ApiResponse } from "@/lib/types/external/common";
 import { ErrorResponse } from "@/lib/types/external/error";
 import { LoginResponse, LoginSchema } from "@/lib/types/external/login";
