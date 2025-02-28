@@ -30,3 +30,11 @@ export const fetcher = async <T>(url: string) => {
 	const res = await axiosClient.get<T>(url);
 	return res.data;
 };
+
+export function likePost(postId: number) {
+	return axiosClient.post<null>(`/api/posts/${postId}/likes`);
+}
+
+export function unlikePost(postId: number) {
+	return axiosClient.delete<null>(`/api/posts/${postId}/likes`);
+}
