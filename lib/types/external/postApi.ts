@@ -24,14 +24,20 @@ interface PostRelationships {
 	media?: RelationshipToMany<number>;
 }
 
-export interface PostResourceMetadata {
-	interactions: Interactions;
+interface PostResourceMetadata {
+	metrics: PostMetrics;
+	userInteractions: UserInteractions;
 }
 
-export interface Interactions {
+export interface PostMetrics {
 	repliesCount: number;
-	likesCount: number;
 	repostsCount: number;
+	likesCount: number;
+}
+
+export interface UserInteractions {
 	isLiked: boolean;
+	likedAt: string | Date | null;
 	isReposted: boolean;
+	repostedAt: string | Date | null;
 }

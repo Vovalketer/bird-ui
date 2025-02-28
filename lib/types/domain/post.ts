@@ -11,7 +11,7 @@ export default interface Post {
 	interactions: Interactions;
 }
 
-interface Interactions {
+export interface Interactions {
 	likesCount: number;
 	repostsCount: number;
 	repliesCount: number;
