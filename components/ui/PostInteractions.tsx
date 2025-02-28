@@ -1,4 +1,4 @@
-import { Interactions } from "@/lib/types/external/postApi";
+import { Interactions } from "@/lib/types/domain/post";
 import { ChatBubbleLeftIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 interface PostInteractionProps {

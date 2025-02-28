@@ -1,12 +1,8 @@
-import { PostResource } from "@/lib/types/PostResource";
-import { UserResource } from "@/lib/types/UserResource";
-import { MediaResource } from "@/lib/types/MediaResource";
 import PostCard from "./PostCard";
+import Post from "@/lib/types/domain/post";
 
 interface PostListProps {
-	posts?: PostResource[];
-	users?: UserResource[];
-	media?: MediaResource[];
+	posts?: Post[];
 }
 
 export default function PostList({ posts, users, media }: PostListProps) {
