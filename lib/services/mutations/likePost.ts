@@ -4,6 +4,7 @@ import { PostResource } from "@/lib/types/external/postApi";
 import { likePost, unlikePost } from "../api/birdApi";
 import { AxiosError, isAxiosError } from "axios";
 import { ErrorResponse } from "@/lib/types/external/error";
+import { updateInteractions } from "./helper";
 
 export async function likePostMutation(response: ApiResponse<PostResource>) {
 	if (response.data.metadata.userInteractions.isLiked) {
@@ -22,24 +23,8 @@ export async function likePostMutation(response: ApiResponse<PostResource>) {
 		}
 	}
 	//emulate response as per SWR's needs, perhaps we could just refetch later
-	const updatedInteractions: ApiResponse<PostResource> = {
-		...response,
-		data: {
-			...response.data,
-			metadata: {
-				...response.data.metadata,
-				metrics: {
-					...response.data.metadata.metrics,
-					likesCount: response.data.metadata.metrics.likesCount + 1,
-				},
-				userInteractions: {
-					...response.data.metadata.userInteractions,
-					isLiked: true,
-				},
-			},
-		},
-	};
-	return updatedInteractions;
+
+	return updateInteractions(response, "like");
 }
 
 export async function unlikePostMutation(response: ApiResponse<PostResource>) {
@@ -59,47 +44,14 @@ export async function unlikePostMutation(response: ApiResponse<PostResource>) {
 		}
 	}
 	//emulate response as per SWR's needs, perhaps we could just refetch later
-	const updatedInteractions: ApiResponse<PostResource> = {
-		...response,
-		data: {
-			...response.data,
-			metadata: {
-				...response.data.metadata,
-				metrics: {
-					...response.data.metadata.metrics,
-					likesCount: response.data.metadata.metrics.likesCount - 1,
-				},
-				userInteractions: {
-					...response.data.metadata.userInteractions,
-					isLiked: false,
-				},
-			},
-		},
-	};
-	return updatedInteractions;
+
+	return updateInteractions(response, "unlike");
 }
 
 export function likePostOptions(response: ApiResponse<PostResource>) {
 	return {
 		optimisticData: () => {
-			const updatedInteractions: ApiResponse<PostResource> = {
-				...response,
-				data: {
-					...response.data,
-					metadata: {
-						...response.data.metadata,
-						metrics: {
-							...response.data.metadata.metrics,
-							likesCount: response.data.metadata.metrics.likesCount + 1,
-						},
-						userInteractions: {
-							...response.data.metadata.userInteractions,
-							isLiked: true,
-						},
-					},
-				},
-			};
-			return updatedInteractions;
+			return updateInteractions(response, "like");
 		},
 		revalidate: false,
 	};
@@ -108,24 +60,7 @@ export function likePostOptions(response: ApiResponse<PostResource>) {
 export function unlikePostOptions(response: ApiResponse<PostResource>) {
 	return {
 		optimisticData: () => {
-			const updatedInteractions: ApiResponse<PostResource> = {
-				...response,
-				data: {
-					...response.data,
-					metadata: {
-						...response.data.metadata,
-						metrics: {
-							...response.data.metadata.metrics,
-							likesCount: response.data.metadata.metrics.likesCount - 1,
-						},
-						userInteractions: {
-							...response.data.metadata.userInteractions,
-							isLiked: false,
-						},
-					},
-				},
-			};
-			return updatedInteractions;
+			return updateInteractions(response, "unlike");
 		},
 		revalidate: false,
 	};
