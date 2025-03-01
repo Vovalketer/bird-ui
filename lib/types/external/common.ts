@@ -6,13 +6,23 @@ export interface ApiResponse<T> {
 	data: T;
 	included?: IncludedResources;
 	links: ResponseLinks;
-	metadata: unknown;
+	metadata: ResponseMetadata;
 }
 
 interface IncludedResources {
 	posts?: PostResource[];
 	users?: UserResource[];
 	media?: MediaResource[];
+}
+interface ResponseMetadata {
+	pagination: Pagination;
+}
+interface Pagination {
+	totalElements: number;
+	numberOfElements: number;
+	first: boolean;
+	last: boolean;
+	empty: boolean;
 }
 export interface ResourceLinks {
 	self: string;
