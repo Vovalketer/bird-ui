@@ -6,9 +6,14 @@ import Post from "@/lib/types/domain/post";
 interface PostCardProps {
 	post: Post;
 	handleLike?: () => void;
+	handleRepost?: () => void;
 }
 
-export default function PostCard({ post, handleLike }: PostCardProps) {
+export default function PostCard({
+	post,
+	handleLike,
+	handleRepost,
+}: PostCardProps) {
 	if (!post) return null;
 	return (
 		<article className="border-2 border-light-border dark:border-dark-border">
@@ -31,6 +36,7 @@ export default function PostCard({ post, handleLike }: PostCardProps) {
 				<PostInteractions
 					interactions={post.interactions}
 					handleLike={handleLike}
+					handleRepost={handleRepost}
 				/>
 			</footer>
 		</article>

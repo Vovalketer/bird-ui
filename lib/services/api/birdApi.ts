@@ -38,3 +38,11 @@ export function likePost(postId: number) {
 export function unlikePost(postId: number) {
 	return axiosClient.delete<null>(`/api/posts/${postId}/likes`);
 }
+
+export function repost(postId: number) {
+	return axiosClient.post<null>(`/api/posts/${postId}/reposts`);
+}
+
+export function unrepost(postId: number) {
+	return axiosClient.delete<null>(`/api/posts/${postId}/reposts`);
+}

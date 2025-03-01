@@ -11,6 +11,12 @@ import {
 	unlikePostMutation,
 	unlikePostOptions,
 } from "../mutations/likePost";
+import {
+	repostPostMutation,
+	repostPostOptions,
+	unrepostPostMutation,
+	unrepostPostOptions,
+} from "../mutations/repost";
 
 export function usePost(postId: number | string) {
 	const {
@@ -51,5 +57,33 @@ export function usePost(postId: number | string) {
 			}
 		}
 	}
-	return { data: post, likePost, unlikePost, ...rest };
+	async function repost() {
+		if (!apiData) {
+			throw new Error("Post is not available");
+		}
+		try {
+			await mutate(repostPostMutation(apiData), repostPostOptions(apiData));
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`An error has occurred \n${error.message}`);
+			} else {
+				throw new Error(`An error has occurred`);
+			}
+		}
+	}
+	async function unrepost() {
+		if (!apiData) {
+			throw new Error("Post is not available");
+		}
+		try {
+			await mutate(unrepostPostMutation(apiData), unrepostPostOptions(apiData));
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`An error has occurred \n${error.message}`);
+			} else {
+				throw new Error(`An error has occurred`);
+			}
+		}
+	}
+	return { data: post, likePost, unlikePost, repost, unrepost, ...rest };
 }
