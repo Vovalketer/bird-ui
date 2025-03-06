@@ -2,8 +2,8 @@
 
 import FormButton from "@/components/ui/form/FormButton";
 import FormInput from "@/components/ui/form/FormInput";
-import register from "@/lib/actions/users/Register";
-import { RegistrationSchema } from "@/lib/types/RegistrationTypes";
+import register from "@/lib/actions/users/register";
+import { RegistrationSchema } from "@/lib/types/external/register";
 import toast from "react-hot-toast";
 
 async function submitForm(formData: FormData) {

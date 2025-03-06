@@ -1,11 +1,11 @@
 "use server";
-import { axiosInstance } from "@/lib/fetcher";
-import { ErrorResponse } from "@/lib/types/ErrorResponse";
+import { axiosClient } from "@/lib/services/api/birdApiServer";
+import { ErrorResponse } from "@/lib/types/external/error";
 import {
 	RegistrationError,
 	RegistrationSchema,
-} from "@/lib/types/RegistrationTypes";
-import { UserResource } from "@/lib/types/UserResource";
+} from "@/lib/types/external/register";
+import { UserResource } from "@/lib/types/external/userApi";
 import { AxiosError, isAxiosError } from "axios";
 
 export default async function register(signUp: unknown) {
@@ -20,7 +20,7 @@ export default async function register(signUp: unknown) {
 	}
 
 	try {
-		const serverResponse = await axiosInstance.post<UserResource>(
+		const serverResponse = await axiosClient.post<UserResource>(
 			"/api/users/register",
 			result.data,
 		);
