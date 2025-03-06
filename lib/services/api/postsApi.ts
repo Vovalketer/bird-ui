@@ -29,12 +29,20 @@ export function usePost(postId: number | string) {
 		post = postResourceMapper(apiData);
 	}
 
-	async function likePost() {
+	async function executeMutation(
+		mutationFn: (
+			data: ApiResponse<PostResource>,
+		) => Promise<ApiResponse<PostResource>>,
+		optionsFn: (data: ApiResponse<PostResource>) => {
+			revalidate: boolean;
+			optimisticData: () => ApiResponse<PostResource>;
+		},
+	) {
 		if (!apiData) {
 			throw new Error("Post is not available");
 		}
 		try {
-			await mutate(likePostMutation(apiData), likePostOptions(apiData));
+			await mutate(mutationFn(apiData), optionsFn(apiData));
 		} catch (error) {
 			if (error instanceof Error) {
 				throw new Error(`An error has occurred \n${error.message}`);
@@ -43,47 +51,23 @@ export function usePost(postId: number | string) {
 			}
 		}
 	}
-	async function unlikePost() {
-		if (!apiData) {
-			throw new Error("Post is not available");
-		}
-		try {
-			await mutate(unlikePostMutation(apiData), unlikePostOptions(apiData));
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error(`An error has occurred \n${error.message}`);
-			} else {
-				throw new Error(`An error has occurred`);
-			}
+
+	async function toggleLike() {
+		const isLiked = post?.interactions.isLiked;
+		if (!isLiked) {
+			await executeMutation(likePostMutation, likePostOptions);
+		} else {
+			await executeMutation(unlikePostMutation, unlikePostOptions);
 		}
 	}
-	async function repost() {
-		if (!apiData) {
-			throw new Error("Post is not available");
-		}
-		try {
-			await mutate(repostPostMutation(apiData), repostPostOptions(apiData));
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error(`An error has occurred \n${error.message}`);
-			} else {
-				throw new Error(`An error has occurred`);
-			}
+
+	async function toggleRepost() {
+		const isReposted = post?.interactions.isReposted;
+		if (!isReposted) {
+			await executeMutation(repostPostMutation, repostPostOptions);
+		} else {
+			await executeMutation(unrepostPostMutation, unrepostPostOptions);
 		}
 	}
-	async function unrepost() {
-		if (!apiData) {
-			throw new Error("Post is not available");
-		}
-		try {
-			await mutate(unrepostPostMutation(apiData), unrepostPostOptions(apiData));
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error(`An error has occurred \n${error.message}`);
-			} else {
-				throw new Error(`An error has occurred`);
-			}
-		}
-	}
-	return { data: post, likePost, unlikePost, repost, unrepost, ...rest };
+	return { post, toggleLike, toggleRepost, ...rest };
 }
