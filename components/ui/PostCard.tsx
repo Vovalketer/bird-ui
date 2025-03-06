@@ -5,14 +5,16 @@ import Post from "@/lib/types/domain/post";
 
 interface PostCardProps {
 	post: Post;
-	handleLike?: () => void;
-	handleRepost?: () => void;
+	onLike?: () => void;
+	onRepost?: () => void;
+	onReply?: () => void;
 }
 
 export default function PostCard({
 	post,
-	handleLike,
-	handleRepost,
+	onLike,
+	onRepost,
+	onReply,
 }: PostCardProps) {
 	if (!post) return null;
 	return (
@@ -36,8 +38,9 @@ export default function PostCard({
 			<footer className="flex justify-between place-items-center w-full py-3 px-24">
 				<PostInteractions
 					interactions={post.interactions}
-					handleLike={handleLike}
-					handleRepost={handleRepost}
+					onLikeToggle={onLike}
+					onRepostToggle={onRepost}
+					onReply={onReply}
 				/>
 			</footer>
 		</article>

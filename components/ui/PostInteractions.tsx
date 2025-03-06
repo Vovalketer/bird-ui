@@ -3,31 +3,31 @@ import { ChatBubbleLeftIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 interface PostInteractionProps {
 	interactions: Interactions;
-	handleReply?: () => void;
-	handleLike?: () => void;
-	handleRepost?: () => void;
+	onReply?: () => void;
+	onLikeToggle?: () => void;
+	onRepostToggle?: () => void;
 }
 export default function PostInteractions({
 	interactions: { repliesCount, repostsCount, likesCount, isLiked, isReposted },
-	handleReply,
-	handleLike,
-	handleRepost,
+	onReply,
+	onLikeToggle,
+	onRepostToggle,
 }: PostInteractionProps) {
 	return (
 		<>
 			<div>
-				<ReplyButton onClick={handleReply} interactionsCount={repliesCount} />
+				<ReplyButton onClick={onReply} interactionsCount={repliesCount} />
 			</div>
 			<div>
 				<LikeButton
-					onClick={handleLike}
+					onClick={onLikeToggle}
 					interactionsCount={likesCount}
 					fill={isLiked}
 				/>
 			</div>
 			<div>
 				<RepostButton
-					onClick={handleRepost}
+					onClick={onRepostToggle}
 					interactionsCount={repostsCount}
 					fill={isReposted}
 				/>
