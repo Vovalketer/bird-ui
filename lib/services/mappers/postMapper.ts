@@ -3,33 +3,41 @@ import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
 import { userMapper } from "./userMapper";
 import { mediaMapper } from "./mediaMapper";
+import { UserResource } from "@/lib/types/external/userApi";
+import { MediaResource } from "@/lib/types/external/mediaApi";
 
-export function postResourceMapper(
-	response: ApiResponse<PostResource>,
-): Post | undefined {
+export function postResourceMapper(response: ApiResponse<PostResource>): Post {
 	const apiUser = response.included?.users?.find(
 		(user) => user.id === response.data.relationships.user.data.id,
 	);
+	if (!apiUser) throw new Error("User not found");
+
 	const mediaIds = response.data.relationships.media?.data.map((m) => m.id);
 	const includedMedia = response.included?.media;
 	const apiMedia = includedMedia?.filter((media) =>
 		mediaIds?.includes(media.id),
 	);
-	if (!apiUser) return;
-	const user = userMapper(apiUser);
-	const media = mediaMapper(apiMedia);
 
+	return postMapper(response.data, apiUser, apiMedia);
+}
+function postMapper(
+	postResource: PostResource,
+	userResource: UserResource,
+	mediaResources?: MediaResource[],
+): Post {
+	const user = userMapper(userResource);
+	const media = mediaResources ? mediaMapper(mediaResources) : undefined;
 	return {
-		id: response.data.id,
-		text: response.data.attributes.text,
-		replyType: response.data.attributes.replyType,
-		createdAt: response.data.attributes.createdAt,
+		id: postResource.id,
+		text: postResource.attributes.text,
+		replyType: postResource.attributes.replyType,
+		createdAt: postResource.attributes.createdAt,
 		interactions: {
-			repliesCount: response.data.metadata.metrics.repliesCount,
-			repostsCount: response.data.metadata.metrics.repostsCount,
-			likesCount: response.data.metadata.metrics.likesCount,
-			isLiked: response.data.metadata.userInteractions.isLiked,
-			isReposted: response.data.metadata.userInteractions.isReposted,
+			repliesCount: postResource.metadata.metrics.repliesCount,
+			repostsCount: postResource.metadata.metrics.repostsCount,
+			likesCount: postResource.metadata.metrics.likesCount,
+			isLiked: postResource.metadata.userInteractions.isLiked,
+			isReposted: postResource.metadata.userInteractions.isReposted,
 		},
 		user: user,
 		media: media,
