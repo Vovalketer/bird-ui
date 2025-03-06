@@ -20,6 +20,26 @@ export function postResourceMapper(response: ApiResponse<PostResource>): Post {
 
 	return postMapper(response.data, apiUser, apiMedia);
 }
+
+export function postArrayResourceMapper(
+	response: ApiResponse<PostResource[]>,
+): Post[] {
+	const posts = response.included?.users?.flatMap((user) => {
+		const postsFromUser = response.data.filter(
+			(post) => user.id === post.relationships.user.data.id,
+		);
+		const mappedPosts = postsFromUser.map((postApi) => {
+			const mappedPost = postMapper(postApi, user);
+			return mappedPost;
+		});
+		return mappedPosts;
+	});
+
+	return posts ? posts : [];
+
+	//TODO: sort the result
+}
+
 function postMapper(
 	postResource: PostResource,
 	userResource: UserResource,
