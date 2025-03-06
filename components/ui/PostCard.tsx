@@ -30,6 +30,7 @@ export default function PostCard({
 					text={post.text}
 					media={post.media}
 					createdAt={post.createdAt}
+					url={`http://localhost:3000/posts/${post.id}`}
 				/>
 			</section>
 			<footer className="flex justify-between place-items-center w-full py-3 px-24">
