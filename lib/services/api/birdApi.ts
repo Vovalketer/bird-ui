@@ -31,18 +31,18 @@ export const fetcher = async <T>(url: string) => {
 	return res.data;
 };
 
-export function likePost(postId: number) {
+export function likePost(postId: number | string) {
 	return axiosClient.post<null>(`/api/posts/${postId}/likes`);
 }
 
-export function unlikePost(postId: number) {
+export function unlikePost(postId: number | string) {
 	return axiosClient.delete<null>(`/api/posts/${postId}/likes`);
 }
 
-export function repost(postId: number) {
+export function repost(postId: number | string) {
 	return axiosClient.post<null>(`/api/posts/${postId}/reposts`);
 }
 
-export function unrepost(postId: number) {
+export function unrepost(postId: number | string) {
 	return axiosClient.delete<null>(`/api/posts/${postId}/reposts`);
 }
