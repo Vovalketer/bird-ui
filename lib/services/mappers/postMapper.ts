@@ -47,6 +47,7 @@ function postMapper(
 ): Post {
 	const user = userMapper(userResource);
 	const media = mediaResources ? mediaMapper(mediaResources) : undefined;
+	const userInteractions = postResource.metadata.userInteractions;
 	return {
 		id: postResource.id,
 		text: postResource.attributes.text,
@@ -56,8 +57,8 @@ function postMapper(
 			repliesCount: postResource.metadata.metrics.repliesCount,
 			repostsCount: postResource.metadata.metrics.repostsCount,
 			likesCount: postResource.metadata.metrics.likesCount,
-			isLiked: postResource.metadata.userInteractions.isLiked,
-			isReposted: postResource.metadata.userInteractions.isReposted,
+			isLiked: userInteractions ? userInteractions.isLiked : false,
+			isReposted: userInteractions ? userInteractions.isReposted : false,
 		},
 		user: user,
 		media: media,

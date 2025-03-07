@@ -5,6 +5,7 @@ export function updateInteractions(
 	response: ApiResponse<PostResource>,
 	type: "like" | "unlike" | "repost" | "unrepost",
 ): ApiResponse<PostResource> {
+	if (!response.data.metadata.userInteractions) return response;
 	const res = {
 		...response,
 		data: {

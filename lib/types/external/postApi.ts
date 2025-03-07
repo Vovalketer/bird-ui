@@ -26,7 +26,7 @@ interface PostRelationships {
 
 interface PostResourceMetadata {
 	metrics: PostMetrics;
-	userInteractions: UserInteractions;
+	userInteractions?: UserInteractions;
 }
 
 export interface PostMetrics {
