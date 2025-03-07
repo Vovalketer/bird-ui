@@ -17,8 +17,10 @@ import {
 	unrepostPostMutation,
 	unrepostPostOptions,
 } from "../mutations/repost";
+import { useState } from "react";
 
 export function usePost(postId: number | string) {
+	const [error, setError] = useState<Error | null>(null);
 	const {
 		data: apiData,
 		mutate,
@@ -38,17 +40,19 @@ export function usePost(postId: number | string) {
 			optimisticData: () => ApiResponse<PostResource>;
 		},
 	) {
-		if (!apiData) {
-			throw new Error("Post is not available");
-		}
-		try {
-			await mutate(mutationFn(apiData), optionsFn(apiData));
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error(`An error has occurred \n${error.message}`);
-			} else {
-				throw new Error(`An error has occurred`);
+		if (apiData) {
+			try {
+				setError(null);
+				await mutate(mutationFn(apiData), optionsFn(apiData));
+			} catch (error) {
+				if (error instanceof Error) {
+					setError(new Error(`${error.message}`));
+				} else {
+					setError(new Error(`An error has occurred`));
+				}
 			}
+		} else {
+			setError(new Error("Post is not available"));
 		}
 	}
 
@@ -69,5 +73,5 @@ export function usePost(postId: number | string) {
 			await executeMutation(unrepostPostMutation, unrepostPostOptions);
 		}
 	}
-	return { post, toggleLike, toggleRepost, ...rest };
+	return { post, toggleLike, toggleRepost, error, ...rest };
 }
