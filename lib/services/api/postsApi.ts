@@ -24,7 +24,8 @@ export function usePost(postId: number | string) {
 	const {
 		data: apiData,
 		mutate,
-		...rest
+		isLoading,
+		isValidating,
 	} = useSWR<ApiResponse<PostResource>>(`/api/posts/${postId}`, fetcher);
 	let post: Post | undefined = undefined;
 	if (apiData) {
@@ -56,7 +57,7 @@ export function usePost(postId: number | string) {
 		}
 	}
 
-	async function toggleLike() {
+	async function likeToggle() {
 		const isLiked = post?.interactions.isLiked;
 		if (!isLiked) {
 			await executeMutation(likePostMutation, likePostOptions);
@@ -65,7 +66,7 @@ export function usePost(postId: number | string) {
 		}
 	}
 
-	async function toggleRepost() {
+	async function repostToggle() {
 		const isReposted = post?.interactions.isReposted;
 		if (!isReposted) {
 			await executeMutation(repostPostMutation, repostPostOptions);
@@ -73,5 +74,5 @@ export function usePost(postId: number | string) {
 			await executeMutation(unrepostPostMutation, unrepostPostOptions);
 		}
 	}
-	return { post, toggleLike, toggleRepost, error, ...rest };
+	return { post, likeToggle, repostToggle, error, isLoading, isValidating };
 }
