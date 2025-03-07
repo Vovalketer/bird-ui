@@ -2,50 +2,22 @@
 import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
 import { likePost, unlikePost } from "../api/birdApi";
-import { AxiosError, isAxiosError } from "axios";
-import { ErrorResponse } from "@/lib/types/external/error";
-import { updateInteractions } from "./helper";
+import { handleInteractionMutation, updateInteractions } from "./helper";
 
 export async function likePostMutation(response: ApiResponse<PostResource>) {
-	if (response.data.metadata.userInteractions.isLiked) {
-		return response;
-	}
-	try {
-		await likePost(response.data.id);
-	} catch (error) {
-		if (isAxiosError(error)) {
-			const err: AxiosError<ErrorResponse> = error;
-			if (err.status === 401) {
-				// should offer a link to login
-				throw new Error("The user is not authenticated");
-			}
-			throw new Error(err.message);
-		}
-	}
-	//emulate response as per SWR's needs, perhaps we could just refetch later
-
-	return updateInteractions(response, "like");
+	return handleInteractionMutation({
+		response: response,
+		interactionType: "like",
+		mutatorFn: likePost,
+	});
 }
 
 export async function unlikePostMutation(response: ApiResponse<PostResource>) {
-	if (!response.data.metadata.userInteractions.isLiked) {
-		return response;
-	}
-	try {
-		await unlikePost(response.data.id);
-	} catch (error) {
-		if (isAxiosError(error)) {
-			const err: AxiosError<ErrorResponse> = error;
-			if (err.status === 401) {
-				// should offer a link to login
-				throw new Error("The user is not authenticated");
-			}
-			throw new Error(err.message);
-		}
-	}
-	//emulate response as per SWR's needs, perhaps we could just refetch later
-
-	return updateInteractions(response, "unlike");
+	return handleInteractionMutation({
+		response: response,
+		interactionType: "unlike",
+		mutatorFn: unlikePost,
+	});
 }
 
 export function likePostOptions(response: ApiResponse<PostResource>) {
