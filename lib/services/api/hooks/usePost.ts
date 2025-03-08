@@ -32,11 +32,12 @@ export default function usePost(postId: number | string) {
 		post = postResourceMapper(apiData);
 	}
 
+	//mutation wrapper
 	async function executeMutation(
-		mutationFn: (
+		mutationFn?: (
 			data: ApiResponse<PostResource>,
 		) => Promise<ApiResponse<PostResource>>,
-		optionsFn: (data: ApiResponse<PostResource>) => {
+		optionsFn?: (data: ApiResponse<PostResource>) => {
 			revalidate: boolean;
 			optimisticData: () => ApiResponse<PostResource>;
 		},
@@ -44,7 +45,11 @@ export default function usePost(postId: number | string) {
 		if (apiData) {
 			try {
 				setError(null);
-				await mutate(mutationFn(apiData), optionsFn(apiData));
+				if (mutationFn && optionsFn) {
+					await mutate(mutationFn(apiData), optionsFn(apiData));
+				} else {
+					await mutate();
+				}
 			} catch (error) {
 				if (error instanceof Error) {
 					setError(new Error(`${error.message}`));
