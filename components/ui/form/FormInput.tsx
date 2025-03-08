@@ -17,7 +17,7 @@ export default function FormInput({
 				type={type}
 				name={name}
 				placeholder={placeholder}
-				className="bg-transparent w-80 text-lg dark:text-white placeholder:text-gray-400 placeholder:text-base px-2 py-1  ring-gray-600 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-md"
+				className="bg-transparent w-80 text-lg dark:text-white placeholder:text-gray-400 placeholder:text-base px-2 py-1  ring-gray-600 ring-1 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-md"
 			/>
 		</label>
 	);
