@@ -2,24 +2,24 @@
 import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
 import useSWR from "swr";
-import { fetcher } from "./birdApi";
-import { postResourceMapper } from "../mappers/postMapper";
+import { fetcher } from "../birdApi";
+import { postResourceMapper } from "../../mappers/postMapper";
 import Post from "@/lib/types/domain/post";
 import {
 	likePostMutation,
 	likePostOptions,
 	unlikePostMutation,
 	unlikePostOptions,
-} from "../mutations/likePost";
+} from "../../mutations/likePost";
 import {
 	repostPostMutation,
 	repostPostOptions,
 	unrepostPostMutation,
 	unrepostPostOptions,
-} from "../mutations/repost";
+} from "../../mutations/repost";
 import { useState } from "react";
 
-export function usePost(postId: number | string) {
+export default function usePost(postId: number | string) {
 	const [error, setError] = useState<Error | null>(null);
 	const {
 		data: apiData,
