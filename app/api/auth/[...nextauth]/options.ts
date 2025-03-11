@@ -1,4 +1,4 @@
-import { axiosClient } from "@/lib/services/api/birdApiServer";
+import { axiosBaseClient as axiosClient } from "@/lib/services/api/birdApiServer";
 import { ApiResponse } from "@/lib/types/external/common";
 import { ErrorResponse } from "@/lib/types/external/error";
 import { LoginResponse, LoginSchema } from "@/lib/types/external/login";
@@ -35,6 +35,7 @@ export const options: NextAuthOptions = {
 				if (!res || res.status !== 200 || !res.data) {
 					return null;
 				}
+
 				const userRes = await axiosClient
 					.get<ApiResponse<UserResource>>("/api/users", {
 						headers: { Authorization: `Bearer ${res.data.accessToken}` },
