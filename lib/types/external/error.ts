@@ -5,7 +5,7 @@ export interface ErrorApi {
 	status: string;
 	title: string;
 	detail: string;
-	source: ErrorSource;
+	source?: ErrorSource;
 }
 
 interface ErrorSource {
