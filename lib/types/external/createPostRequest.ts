@@ -1,13 +1,7 @@
 import { z } from "zod";
 
-export interface CreatePostRequest {
-	text: string;
-	replyType: "EVERYONE" | "FOLLOWERS" | "MENTIONS";
-	media: File[];
-}
-
 export const CreatePostRequestSchema = z.object({
-	text: z.string().max(255),
+	text: z.string().max(255).optional(),
 	replyType: z.enum(["EVERYONE", "FOLLOWERS", "MENTIONS"]),
-	media: z.array(z.instanceof(File).optional()),
+	media: z.array(z.instanceof(File)).optional(),
 });
