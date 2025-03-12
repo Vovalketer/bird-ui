@@ -1,23 +1,19 @@
 "use client";
+import Post from "@/lib/types/domain/post";
 import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
+import { useState } from "react";
 import useSWR from "swr";
-import { fetcher } from "../birdApi";
 import { postResourceMapper } from "../../mappers/postMapper";
-import Post from "@/lib/types/domain/post";
 import {
-	likePostMutation,
-	likePostOptions,
-	unlikePostMutation,
-	unlikePostOptions,
+	likeOptimisticData,
+	unlikeOptimisticData,
 } from "../../mutations/likePost";
 import {
-	repostPostMutation,
-	repostPostOptions,
-	unrepostPostMutation,
-	unrepostPostOptions,
+	repostOptimisticData,
+	unrepostOptimisticData,
 } from "../../mutations/repost";
-import { useState } from "react";
+import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
 
 export default function usePost(postId: number | string) {
 	const [error, setError] = useState<Error | null>(null);
@@ -32,25 +28,19 @@ export default function usePost(postId: number | string) {
 		post = postResourceMapper(apiData);
 	}
 
-	//mutation wrapper
 	async function executeMutation(
-		mutationFn?: (
+		optimisticDataFn: (
 			data: ApiResponse<PostResource>,
-		) => Promise<ApiResponse<PostResource>>,
-		optionsFn?: (data: ApiResponse<PostResource>) => {
-			revalidate: boolean;
-			optimisticData: () => ApiResponse<PostResource>;
-		},
+		) => ApiResponse<PostResource>,
+		mutationFn: (postId: number | string) => Promise<unknown>,
 	) {
 		if (apiData) {
 			try {
 				setError(null);
-				if (mutationFn && optionsFn) {
-					await mutate(mutationFn(apiData), optionsFn(apiData));
-				} else {
-					await mutate();
-				}
+				await mutate(optimisticDataFn(apiData), false);
+				await mutationFn(apiData.data.id);
 			} catch (error) {
+				await mutate(apiData);
 				if (error instanceof Error) {
 					setError(new Error(`${error.message}`));
 				} else {
@@ -65,19 +55,27 @@ export default function usePost(postId: number | string) {
 	async function likeToggle() {
 		const isLiked = post?.interactions.isLiked;
 		if (!isLiked) {
-			await executeMutation(likePostMutation, likePostOptions);
+			await executeMutation(likeOptimisticData, likePost);
 		} else {
-			await executeMutation(unlikePostMutation, unlikePostOptions);
+			await executeMutation(unlikeOptimisticData, unlikePost);
 		}
 	}
 
 	async function repostToggle() {
 		const isReposted = post?.interactions.isReposted;
 		if (!isReposted) {
-			await executeMutation(repostPostMutation, repostPostOptions);
+			await executeMutation(repostOptimisticData, repost);
 		} else {
-			await executeMutation(unrepostPostMutation, unrepostPostOptions);
+			await executeMutation(unrepostOptimisticData, unrepost);
 		}
 	}
-	return { post, likeToggle, repostToggle, error, isLoading, isValidating };
+
+	return {
+		post,
+		likeToggle,
+		repostToggle,
+		error,
+		isLoading,
+		isValidating,
+	};
 }
