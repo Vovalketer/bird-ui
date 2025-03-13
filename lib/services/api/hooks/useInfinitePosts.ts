@@ -15,9 +15,13 @@ import { PostResource } from "@/lib/types/external/postApi";
 
 export function useInfinitePosts(url: string) {
 	const [error, setError] = useState<Error | null>(null);
-	const { data, setSize, mutate, isValidating, isLoading } = useSWRInfinite<
-		ApiResponse<PostResource[]>
-	>(
+	const {
+		data,
+		setSize,
+		mutate,
+		isValidating: isLoading,
+		isLoading: isLoadingInitialData,
+	} = useSWRInfinite<ApiResponse<PostResource[]>>(
 		(pageIndex, previousPageData: ApiResponse<PostResource[]>) => {
 			if (previousPageData && previousPageData.metadata.pagination.last) {
 				return null;
@@ -77,7 +81,7 @@ export function useInfinitePosts(url: string) {
 		setSize,
 		likeToggle,
 		repostToggle,
-		isValidating,
 		isLoading,
+		isLoadingInitialData,
 	};
 }
