@@ -8,7 +8,7 @@ export function updateInteractions(
 	type: "like" | "unlike" | "repost" | "unrepost",
 ): ApiResponse<PostResource> {
 	if (!response.data.metadata.userInteractions) return response;
-	const res = {
+	const res: ApiResponse<PostResource> = {
 		...response,
 		data: {
 			...response.data,
@@ -23,30 +23,66 @@ export function updateInteractions(
 			},
 		},
 	};
+	const updatedPost = updatePostInteractions(res.data, type);
+	res.data = updatedPost;
+	return res;
+}
+
+function updatePostInteractions(
+	post: PostResource,
+	type: "like" | "unlike" | "repost" | "unrepost",
+) {
+	const { metrics, userInteractions } = post.metadata;
+	if (!metrics || !userInteractions) return post;
+	const copy: PostResource = {
+		...post,
+		metadata: {
+			...post.metadata,
+			metrics: { ...metrics },
+			userInteractions: { ...userInteractions },
+		},
+	};
+	const { metrics: metricsCopy, userInteractions: userInteractionsCopy } =
+		copy.metadata;
+
 	switch (type) {
 		case "like":
-			res.data.metadata.metrics.likesCount =
-				response.data.metadata.metrics.likesCount + 1;
-			res.data.metadata.userInteractions.isLiked = true;
+			metricsCopy.likesCount += 1;
+			userInteractionsCopy!.isLiked = true;
 			break;
 		case "unlike":
-			res.data.metadata.metrics.likesCount =
-				response.data.metadata.metrics.likesCount - 1;
-			res.data.metadata.userInteractions.isLiked = false;
+			metricsCopy.likesCount -= 1;
+			userInteractionsCopy!.isLiked = false;
 			break;
 		case "repost":
-			res.data.metadata.metrics.repostsCount =
-				response.data.metadata.metrics.repostsCount + 1;
-			res.data.metadata.userInteractions.isReposted = true;
+			metricsCopy.repostsCount += 1;
+			userInteractionsCopy!.isReposted = true;
 			break;
 		case "unrepost":
-			res.data.metadata.metrics.repostsCount =
-				response.data.metadata.metrics.repostsCount - 1;
-			res.data.metadata.userInteractions.isReposted = false;
+			metricsCopy.repostsCount -= 1;
+			userInteractionsCopy!.isReposted = false;
 			break;
 		default:
 			break;
 	}
+	return copy;
+}
+
+export function updatePageInteractions(
+	response: ApiResponse<PostResource[]>,
+	postId: number | string,
+	type: "like" | "unlike" | "repost" | "unrepost",
+) {
+	const res: ApiResponse<PostResource[]> = {
+		...response,
+		data: response.data.map((post) => {
+			if (post.id === postId) {
+				return updatePostInteractions(post, type);
+			}
+			return post;
+		}),
+	};
+
 	return res;
 }
 
@@ -74,7 +110,6 @@ export async function handleInteractionMutation({
 			throw new Error(err.message);
 		}
 	}
-	//emulate response as per SWR's needs, perhaps we could just refetch later
 
 	return updateInteractions(response, interactionType);
 }
