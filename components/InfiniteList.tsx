@@ -5,19 +5,21 @@ interface InfiniteListProps {
 	children: React.ReactNode;
 	isLoading: boolean;
 	onLoadMore: () => void;
+	hasMore: boolean;
 }
 export default function InfiniteList({
 	children,
 	onLoadMore,
 	isLoading,
+	hasMore,
 }: InfiniteListProps) {
 	const { ref, inView } = useInView({ threshold: 0, delay: 1000 });
 
 	useEffect(() => {
-		if (inView && !isLoading) {
+		if (inView && !isLoading && hasMore) {
 			onLoadMore();
 		}
-	}, [inView, isLoading, onLoadMore]);
+	}, [inView, isLoading, hasMore, onLoadMore]);
 
 	return (
 		<>
