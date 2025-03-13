@@ -13,13 +13,6 @@ export default function UserPage() {
 		useUserInfinitePosts(username as string);
 	const { isOpen, showModal, closeModal } = useModal();
 
-	const handleLike = (postId: string | number) => {
-		likeToggle(postId);
-	};
-
-	const handleRepost = (postId: string | number) => {
-		repostToggle(postId);
-	};
 	return (
 		<>
 			<NewPostModal isOpen={isOpen} onClose={closeModal} />
@@ -32,8 +25,8 @@ export default function UserPage() {
 					<PostCard
 						key={post.id}
 						post={post}
-						onLike={() => handleLike(post.id)}
-						onRepost={() => handleRepost(post.id)}
+						onLike={() => likeToggle(post.id)}
+						onRepost={() => repostToggle(post.id)}
 						onReply={showModal}
 					/>
 				))}
