@@ -1,7 +1,7 @@
 import useSWRInfinite from "swr/infinite";
 import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
 import { ApiResponse } from "@/lib/types/external/common";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
 	likePageOptimisticData,
 	unlikePageOptimisticData,
@@ -57,6 +57,10 @@ export function useInfinitePosts(url: string) {
 	}
 	const posts = data?.flatMap((page) => postArrayResourceMapper(page));
 
+	const loadMore = useCallback(() => {
+		if (!isLoading) setSize((prevSize) => prevSize + 1);
+	}, [isLoading, setSize]);
+
 	async function likeToggle(postId: string | number) {
 		const isLiked = posts?.find((post) => post.id === postId)?.interactions
 			.isLiked;
@@ -80,7 +84,7 @@ export function useInfinitePosts(url: string) {
 	return {
 		posts,
 		error,
-		setSize,
+		loadMore,
 		likeToggle,
 		repostToggle,
 		hasMore,

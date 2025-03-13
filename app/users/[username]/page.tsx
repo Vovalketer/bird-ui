@@ -5,18 +5,13 @@ import PostCard from "@/components/ui/PostCard";
 import useModal from "@/lib/hooks/useModal";
 import { useUserInfinitePosts } from "@/lib/services/api/hooks/useUserInfinitePosts";
 import { useParams } from "next/navigation";
-import { useCallback } from "react";
 
 export default function UserPage() {
 	// user bgaynor5h has 10 posts
 	const { username } = useParams();
-	const { posts, likeToggle, repostToggle, setSize, isLoading } =
+	const { posts, likeToggle, repostToggle, loadMore, hasMore, isLoading } =
 		useUserInfinitePosts(username as string);
 	const { isOpen, showModal, closeModal } = useModal();
-
-	const onLoadMore = useCallback(() => {
-		setSize((prevSize) => prevSize + 1);
-	}, [setSize]);
 
 	const handleLike = (postId: string | number) => {
 		likeToggle(postId);
@@ -28,7 +23,11 @@ export default function UserPage() {
 	return (
 		<>
 			<NewPostModal isOpen={isOpen} onClose={closeModal} />
-			<InfiniteList onLoadMore={onLoadMore} isLoading={isLoading}>
+			<InfiniteList
+				onLoadMore={loadMore}
+				isLoading={isLoading}
+				hasMore={hasMore}
+			>
 				{posts?.map((post) => (
 					<PostCard
 						key={post.id}
