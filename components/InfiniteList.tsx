@@ -22,7 +22,7 @@ export default function InfiniteList({
 	return (
 		<>
 			<section>{children}</section>
-			<div className="observer" ref={ref}></div>;
+			<div className="observer" ref={ref}></div>
 		</>
 	);
 }
