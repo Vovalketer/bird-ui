@@ -1,7 +1,8 @@
-import useSWRInfinite from "swr/infinite";
-import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
 import { ApiResponse } from "@/lib/types/external/common";
+import { PostResource } from "@/lib/types/external/postApi";
 import { useCallback, useState } from "react";
+import useSWRInfinite from "swr/infinite";
+import { postArrayResourceMapper } from "../../mappers/postMapper";
 import {
 	likePageOptimisticData,
 	unlikePageOptimisticData,
@@ -10,11 +11,10 @@ import {
 	repostPageOptimisticData,
 	unrepostPageOptimisticData,
 } from "../../mutations/repost";
-import { postArrayResourceMapper } from "../../mappers/postMapper";
-import { PostResource } from "@/lib/types/external/postApi";
+import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
+import toast from "react-hot-toast";
 
 export function useInfinitePosts(url: string) {
-	const [error, setError] = useState<Error | null>(null);
 	const [hasMore, setHasMore] = useState(true);
 	const {
 		data,
@@ -48,9 +48,9 @@ export function useInfinitePosts(url: string) {
 				await mutationFn(postId);
 			} catch (error) {
 				if (error instanceof Error) {
-					setError(new Error(`${error.message}`));
+					toast.error(`${error.message}`);
 				} else {
-					setError(new Error(`An error has occurred`));
+					toast.error({ message: "An error has occurred" });
 				}
 			}
 		}
@@ -83,7 +83,6 @@ export function useInfinitePosts(url: string) {
 
 	return {
 		posts,
-		error,
 		loadMore,
 		likeToggle,
 		repostToggle,

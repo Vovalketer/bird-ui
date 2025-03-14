@@ -2,7 +2,7 @@
 import Post from "@/lib/types/domain/post";
 import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
-import { useState } from "react";
+import toast from "react-hot-toast";
 import useSWR from "swr";
 import { postResourceMapper } from "../../mappers/postMapper";
 import {
@@ -16,7 +16,6 @@ import {
 import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
 
 export default function usePost(postId: number | string) {
-	const [error, setError] = useState<Error | null>(null);
 	const {
 		data: apiData,
 		mutate,
@@ -36,19 +35,18 @@ export default function usePost(postId: number | string) {
 	) {
 		if (apiData) {
 			try {
-				setError(null);
 				await mutate(optimisticDataFn(apiData), false);
 				await mutationFn(apiData.data.id);
 			} catch (error) {
 				await mutate(apiData);
 				if (error instanceof Error) {
-					setError(new Error(`${error.message}`));
+					toast.error(`${error.message}`);
 				} else {
-					setError(new Error(`An error has occurred`));
+					toast.error("An error has occurred");
 				}
 			}
 		} else {
-			setError(new Error("Post is not available"));
+			toast.error({ message: "Post is not available" });
 		}
 	}
 
@@ -74,7 +72,6 @@ export default function usePost(postId: number | string) {
 		post,
 		likeToggle,
 		repostToggle,
-		error,
 		isLoading,
 		isValidating,
 	};
