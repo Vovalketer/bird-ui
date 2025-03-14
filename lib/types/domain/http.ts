@@ -1,7 +1,7 @@
-import { ErrorDetail } from "./error";
+import { ErrorDetails } from "./error";
 
 export interface HttpResponse<T> {
 	success: boolean;
 	response?: T;
-	errors?: ErrorDetail[] | null;
+	errors?: ErrorDetails[] | null;
 }

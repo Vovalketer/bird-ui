@@ -1,4 +1,4 @@
-import { ErrorDetail } from "@/lib/types/domain/error";
+import { ErrorDetails } from "@/lib/types/domain/error";
 import { ErrorResponse } from "@/lib/types/external/error";
 import { AxiosError, isAxiosError } from "axios";
 
@@ -9,7 +9,7 @@ export default function errorHandler(
 	if (isAxiosError(error)) {
 		const err: AxiosError<ErrorResponse> = error;
 		if (err.response) {
-			const errResponse: ErrorDetail[] = err.response?.data.errors.map(
+			const errResponse: ErrorDetails[] = err.response?.data.errors.map(
 				(error) => {
 					return {
 						cause: error.source ? error.source.parameter : error.title,

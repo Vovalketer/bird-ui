@@ -1,4 +1,4 @@
-export interface ErrorDetail {
-	cause: string;
+export interface ErrorDetails {
+	cause?: string;
 	message: string;
 }
