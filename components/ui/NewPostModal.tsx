@@ -33,12 +33,14 @@ export default function NewPostModal({
 
 		const res = await submitPost(parsedForm.data, post?.id);
 		if (res.success) {
-			toast.success("Reply sent successfully");
+			toast.success(
+				post ? "Reply sent successfully" : "Post sent successfully",
+			);
 		} else {
 			res.errors?.forEach((error) => {
 				toast.error(`${error.cause}: ${error.message}`);
 			});
-			toast.error("Failed to send reply");
+			toast.error("Failed to send post");
 		}
 	};
 	return (
