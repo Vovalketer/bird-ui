@@ -40,17 +40,23 @@ type BaseInteractionButtonProps = {
 	className?: string;
 	iconSize?: number;
 	interactionCount: number;
+	dataTestId?: string;
 } & React.DetailedHTMLProps<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	HTMLButtonElement
 >;
 function BaseInteractionButton({
 	interactionCount,
+	dataTestId,
 	children,
 	...props
 }: BaseInteractionButtonProps) {
 	return (
-		<button className={`flex items-center gap-x-2 gap-y-10`} {...props}>
+		<button
+			data-testid={dataTestId}
+			className={`flex items-center gap-x-2 gap-y-10`}
+			{...props}
+		>
 			{children} <p>{interactionCount}</p>
 		</button>
 	);
@@ -70,8 +76,12 @@ function ReplyButton({
 	iconSize = 24,
 }: InteractionButtonProps) {
 	return (
-		<BaseInteractionButton interactionCount={replyCount} onClick={onClick}>
-			<ChatBubbleLeftIcon width={iconSize} height={iconSize} />
+		<BaseInteractionButton
+			dataTestId="replyButton"
+			interactionCount={replyCount}
+			onClick={onClick}
+		>
+			<ChatBubbleLeftIcon role="img" width={iconSize} height={iconSize} />
 		</BaseInteractionButton>
 	);
 }
@@ -83,11 +93,21 @@ function LikeButton({
 	iconSize = 24,
 }: InteractionButtonProps) {
 	return (
-		<BaseInteractionButton interactionCount={likeCount} onClick={onClick}>
+		<BaseInteractionButton
+			dataTestId="likeButton"
+			interactionCount={likeCount}
+			onClick={onClick}
+		>
 			{fill ? (
-				<HeartIcon width={iconSize} height={iconSize} color="red" fill="red" />
+				<HeartIcon
+					role="img"
+					width={iconSize}
+					height={iconSize}
+					color="red"
+					fill="red"
+				/>
 			) : (
-				<HeartIcon width={iconSize} height={iconSize} />
+				<HeartIcon role="img" width={iconSize} height={iconSize} />
 			)}
 		</BaseInteractionButton>
 	);
@@ -100,11 +120,20 @@ function RepostButton({
 	iconSize = 24,
 }: InteractionButtonProps) {
 	return (
-		<BaseInteractionButton interactionCount={repostCount} onClick={onClick}>
+		<BaseInteractionButton
+			dataTestId={"repostButton"}
+			interactionCount={repostCount}
+			onClick={onClick}
+		>
 			{fill ? (
-				<ArrowPathIcon width={iconSize} height={iconSize} color="lime" />
+				<ArrowPathIcon
+					role="img"
+					width={iconSize}
+					height={iconSize}
+					color="lime"
+				/>
 			) : (
-				<ArrowPathIcon width={iconSize} height={iconSize} />
+				<ArrowPathIcon role="img" width={iconSize} height={iconSize} />
 			)}
 		</BaseInteractionButton>
 	);
