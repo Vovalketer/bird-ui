@@ -55,7 +55,7 @@ export default function NewPostModal({
 						<div className="pl-2 pr-1">
 							<textarea
 								name="text"
-								placeholder={post ? "Write your reply" : "What's happening"}
+								placeholder={post ? "Write your reply" : "What's happening?"}
 								className="textarea textarea-ghost box-border resize-none w-full min-h-32"
 							/>
 						</div>
@@ -70,7 +70,9 @@ export default function NewPostModal({
 								<option value="MENTIONS">Mentioned users can reply</option>
 							</select>
 							<div className="place-self-end">
-								<FormButton type="submit">Reply</FormButton>
+								<FormButton type="submit">
+									{!post ? "Post" : "Reply"}
+								</FormButton>
 							</div>
 						</div>
 					</div>
