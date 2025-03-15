@@ -11,7 +11,7 @@ export default function UserAvatar({ profileImage }: UserAvatarProps) {
 			src={profileImage ? profileImage : ProfilePlaceholder}
 			width={100}
 			height={100}
-			alt=""
+			alt="profile image"
 		/>
 	);
 }
