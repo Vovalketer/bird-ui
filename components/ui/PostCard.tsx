@@ -16,7 +16,6 @@ export default function PostCard({
 	onRepost,
 	onReply,
 }: PostCardProps) {
-	if (!post) return null;
 	return (
 		<article className="border-2 border-light-border dark:border-dark-border">
 			<header className="p-2">
