@@ -7,6 +7,7 @@
 	--color-light-primary: #1da1f2;
 	--color-light-primary-hover: #1a91da;
 	--color-light-background: #ffffff;
+	--color-light-secondary-hover: #cccccc;
 	--color-light-secondary-background: #f5f8fa;
 	--color-light-border: #e1e8ed;
 	--color-light-text-primary: #14171a;
@@ -15,6 +16,7 @@
 	--color-dark-primary: #1da1f2;
 	--color-dark-primary-hover: #1a91da;
 	--color-dark-background: #15202b;
+	--color-dark-secondary-hover: #333333;
 	--color-dark-secondary-background: #192734;
 	--color-dark-border: #38444d;
 	--color-dark-text-primary: #ffffff;
