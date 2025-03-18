@@ -1,51 +1,33 @@
 "use client";
 import { BellIcon, HomeIcon, UserIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
+import SecondaryNavigationItem from "./SecondaryNavigationItem";
 
 interface SidebarProps {
 	className?: string;
 }
 export default function Sidebar({ className }: SidebarProps) {
-	//issue applying gap-y-10
 	return (
-		<aside className={`w-52 ${className}`}>
-			<nav className="fixed h-full gap-y-20">
-				<ul className="menu gap-y-10">
-					<SidebarItem href={"/"}>
+		<aside className={`sticky top-0 flex flex-col h-screen ${className}`}>
+			<nav>
+				<ul className="menu gap-y-5">
+					<SecondaryNavigationItem href={"/"}>
 						<HomeIcon role="img" width={24} height={24} />
 						<span>Home</span>
-					</SidebarItem>
-					<SidebarItem href={"/profile"}>
+					</SecondaryNavigationItem>
+					<SecondaryNavigationItem href={"/profile"}>
 						<UserIcon role="img" width={24} height={24} />
 						<span>Profile</span>
-					</SidebarItem>
-					<SidebarItem href={"/notifications"}>
+					</SecondaryNavigationItem>
+					<SecondaryNavigationItem href={"/notifications"}>
 						<BellIcon role="img" width={24} height={24} />
 						<span>Notifications</span>
-					</SidebarItem>
+					</SecondaryNavigationItem>
 				</ul>
 			</nav>
-			<div className="fixed left-3 bottom-3 ">
+			<div className="mt-auto m-2">
 				<ThemeSwitcher />
 			</div>
 		</aside>
-	);
-}
-
-interface SidebarItemProps {
-	children: React.ReactNode;
-	href: string;
-}
-function SidebarItem({ href, children }: SidebarItemProps) {
-	return (
-		<li>
-			<Link
-				href={href}
-				className="flex items-center gap-x-3 px-4 py-2 font-medium text-lg rounded-lg hover:bg-light-secondary-hover dark:hover:bg-dark-secondary-hover"
-			>
-				{children}
-			</Link>
-		</li>
 	);
 }
