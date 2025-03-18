@@ -33,8 +33,8 @@ export default function RootLayout({
 			>
 				<ThemeProvider>
 					<AuthProvider>
-						<SideBar className="h-dvh bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
-						<main className="w-full h-dvh px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
+						<SideBar className="bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
+						<main className="w-full px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
 							{children}
 						</main>
 					</AuthProvider>
