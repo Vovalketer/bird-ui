@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/context/AuthProvider";
+import SideBar from "@/components/ui/SideBar";
+import ThemeProvider from "@/context/ThemeProvider";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -25,18 +27,25 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`flex ${geistSans.variable} ${geistMono.variable} antialiased `}
 			>
-				<AuthProvider>{children}</AuthProvider>
-				<Toaster
-					position="top-right"
-					toastOptions={{
-						success: { style: { background: "darkgreen", color: "white" } },
-						error: { style: { background: "darkred", color: "white" } },
-					}}
-				/>
+				<ThemeProvider>
+					<AuthProvider>
+						<SideBar className="h-dvh bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
+						<main className="w-full h-dvh px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
+							{children}
+						</main>
+					</AuthProvider>
+					<Toaster
+						position="top-right"
+						toastOptions={{
+							success: { style: { background: "darkgreen", color: "white" } },
+							error: { style: { background: "darkred", color: "white" } },
+						}}
+					/>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
