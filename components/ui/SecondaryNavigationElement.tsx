@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-interface SecondaryNavigationItemProps {
+interface SecondaryNavigationElementProps {
 	children: React.ReactNode;
 	href: string;
 }
-export default function SecondaryNavigationItem({
+export default function SecondaryNavigationElement({
 	children,
 	href,
-}: SecondaryNavigationItemProps) {
+}: SecondaryNavigationElementProps) {
 	return (
 		<Link
 			href={href}
