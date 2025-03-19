@@ -1,8 +1,8 @@
 "use client";
 import InfiniteList from "@/components/InfiniteList";
-import NewPostModal from "@/components/ui/NewPostModal";
+import NewPostButton from "@/components/ui/NewPostButton";
 import PostCard from "@/components/ui/PostCard";
-import { useNewPostModal } from "@/lib/hooks/useNewPostModal";
+import { useNewPostModal } from "@/context/NewPostModalContext";
 import { useUserInfinitePosts } from "@/lib/services/api/hooks/useUserInfinitePosts";
 import { useParams } from "next/navigation";
 
@@ -11,11 +11,10 @@ export default function UserPage() {
 	const { username } = useParams();
 	const { posts, likeToggle, repostToggle, loadMore, hasMore, isLoading } =
 		useUserInfinitePosts(username as string);
-	const { isOpen, openModal, closeModal, replyingTo } = useNewPostModal();
+	const { openModal } = useNewPostModal();
 
 	return (
 		<>
-			<NewPostModal isOpen={isOpen} onClose={closeModal} post={replyingTo} />
 			<InfiniteList
 				onLoadMore={loadMore}
 				isLoading={isLoading}
