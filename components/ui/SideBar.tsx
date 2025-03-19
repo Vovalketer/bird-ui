@@ -11,18 +11,24 @@ export default function Sidebar({ className }: SidebarProps) {
 		<aside className={`sticky top-0 flex flex-col h-screen ${className}`}>
 			<nav>
 				<ul className="menu gap-y-5">
-					<SecondaryNavigationItem href={"/"}>
-						<HomeIcon role="img" width={24} height={24} />
-						<span>Home</span>
-					</SecondaryNavigationItem>
-					<SecondaryNavigationItem href={"/profile"}>
-						<UserIcon role="img" width={24} height={24} />
-						<span>Profile</span>
-					</SecondaryNavigationItem>
-					<SecondaryNavigationItem href={"/notifications"}>
-						<BellIcon role="img" width={24} height={24} />
-						<span>Notifications</span>
-					</SecondaryNavigationItem>
+					<li>
+						<SecondaryNavigationItem href={"/"}>
+							<HomeIcon role="img" width={24} height={24} />
+							<span>Home</span>
+						</SecondaryNavigationItem>
+					</li>
+					<li>
+						<SecondaryNavigationItem href={"/profile"}>
+							<UserIcon role="img" width={24} height={24} />
+							<span>Profile</span>
+						</SecondaryNavigationItem>
+					</li>
+					<li>
+						<SecondaryNavigationItem href={"/notifications"}>
+							<BellIcon role="img" width={24} height={24} />
+							<span>Notifications</span>
+						</SecondaryNavigationItem>
+					</li>
 				</ul>
 			</nav>
 			<div className="mt-auto m-2">
