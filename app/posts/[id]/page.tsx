@@ -45,6 +45,7 @@ export default function Post() {
 					/>
 				))}
 			</InfiniteList>
+			<NewPostButton />
 		</>
 	);
 }
