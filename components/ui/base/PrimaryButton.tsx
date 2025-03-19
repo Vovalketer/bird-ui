@@ -7,7 +7,7 @@ export default function PrimaryButton({
 }: PrimaryButtonProps) {
 	return (
 		<button
-			className="btn rounded-md font-extrabold text-lg bg-light-primary hover:bg-light-primary-hover dark:bg-dark-primary dark:hover:bg-dark-primary-hover"
+			className="btn rounded-4xl font-bold text-xl bg-light-primary hover:bg-light-primary-hover dark:bg-dark-primary dark:hover:bg-dark-primary-hover"
 			{...props}
 		>
 			{children}
