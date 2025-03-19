@@ -1,10 +1,12 @@
+import NewPostModalContainer from "@/components/NewPostModalContainer";
+import SideBar from "@/components/ui/SideBar";
+import AuthProvider from "@/context/AuthProvider";
+import { NewPostModalProvider } from "@/context/NewPostModalContext";
+import ThemeProvider from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import AuthProvider from "@/context/AuthProvider";
-import SideBar from "@/components/ui/SideBar";
-import ThemeProvider from "@/context/ThemeProvider";
+import "./globals.css";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -33,10 +35,13 @@ export default function RootLayout({
 			>
 				<ThemeProvider>
 					<AuthProvider>
-						<SideBar className="bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
-						<main className="w-full px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
-							{children}
-						</main>
+						<NewPostModalProvider>
+							<SideBar className="bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
+							<NewPostModalContainer />
+							<main className="w-full px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
+								{children}
+							</main>
+						</NewPostModalProvider>
 					</AuthProvider>
 					<Toaster
 						position="top-right"
