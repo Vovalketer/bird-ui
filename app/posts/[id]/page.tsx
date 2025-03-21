@@ -2,6 +2,7 @@
 import InfiniteList from "@/components/InfiniteList";
 import NewPostButton from "@/components/ui/NewPostButton";
 import PostCard from "@/components/ui/PostCard";
+import PostComposer from "@/components/ui/PostComposer";
 import { useNewPostModal } from "@/context/NewPostModalContext";
 import usePost from "@/lib/services/api/hooks/usePost";
 import useReplies from "@/lib/services/api/hooks/useReplies";
@@ -30,6 +31,7 @@ export default function Post() {
 				onRepost={repostToggle}
 				onReply={() => openModal(post)}
 			/>
+			<PostComposer replyingToPostId={post.id} borders={true} />
 			<InfiniteList
 				onLoadMore={loadMore}
 				isLoading={isLoading}
