@@ -1,5 +1,6 @@
 "use client";
 import InfiniteList from "@/components/InfiniteList";
+import Divider from "@/components/ui/Divider";
 import NewPostButton from "@/components/ui/NewPostButton";
 import PostCard from "@/components/ui/PostCard";
 import PostComposer from "@/components/ui/PostComposer";
@@ -23,7 +24,7 @@ export default function Post() {
 
 	if (!post) return null;
 	return (
-		<>
+		<div className="flex flex-col gap-y-4">
 			<PostCard
 				key={post.id}
 				post={post}
@@ -32,10 +33,12 @@ export default function Post() {
 				onReply={() => openModal(post)}
 			/>
 			<PostComposer replyingToPostId={post.id} borders={true} />
+			<Divider />
 			<InfiniteList
 				onLoadMore={loadMore}
 				isLoading={isLoading}
 				hasMore={hasMore}
+				className="flex flex-col gap-y-4"
 			>
 				{replies?.map((reply) => (
 					<PostCard
@@ -47,7 +50,7 @@ export default function Post() {
 					/>
 				))}
 			</InfiniteList>
-			<NewPostButton />
-		</>
+			<NewPostButton fixedPosition={true} />
+		</div>
 	);
 }
