@@ -3,12 +3,14 @@ import { useInView } from "react-intersection-observer";
 
 interface InfiniteListProps {
 	children: React.ReactNode;
+	className?: string;
 	isLoading: boolean;
 	onLoadMore: () => void;
 	hasMore: boolean;
 }
 export default function InfiniteList({
 	children,
+	className,
 	onLoadMore,
 	isLoading,
 	hasMore,
@@ -23,7 +25,7 @@ export default function InfiniteList({
 
 	return (
 		<>
-			<section>{children}</section>
+			<section className={className}>{children}</section>
 			<div className="observer" ref={ref}></div>
 		</>
 	);
