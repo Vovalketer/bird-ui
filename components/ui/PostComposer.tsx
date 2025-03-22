@@ -4,21 +4,21 @@ import UserAvatar from "./UserAvatar";
 import submitPost from "@/lib/actions/posts/submitPost";
 import { CreatePostRequestSchema } from "@/lib/types/external/createPostRequest";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 interface ReplyTextAreaProps {
-	profileImage?: string;
 	minRows?: number;
 	maxRows?: number;
 	replyingToPostId?: number;
 	borders?: boolean;
 }
 export default function PostComposer({
-	profileImage,
 	minRows,
 	maxRows,
 	replyingToPostId,
 	borders,
 }: ReplyTextAreaProps) {
+	const session = useSession();
 	const isReply = replyingToPostId !== undefined;
 	const borderClass = borders
 		? "border-2 border-light-border dark:border-dark-border"
@@ -47,9 +47,13 @@ export default function PostComposer({
 			toast.error("Failed to send post");
 		}
 	};
+	if (session.status === "unauthenticated" || session.status === "loading") {
+		return null;
+	}
+
 	return (
 		<form action={handlePost} className={`flex p-2 gap-y-4 ${borderClass}`}>
-			<UserAvatar profileImage={profileImage} />
+			<UserAvatar profileImage={session.data?.user.profileImage} />
 			<div className="flex flex-col w-full gap-y-4 ml-2">
 				<div className="pl-2 pr-1">
 					<TextareaAutosize
