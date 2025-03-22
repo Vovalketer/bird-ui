@@ -10,7 +10,7 @@ interface InfiniteListProps {
 }
 export default function InfiniteList({
 	children,
-	className,
+	className = "flex flex-col gap-y-4",
 	onLoadMore,
 	isLoading,
 	hasMore,
