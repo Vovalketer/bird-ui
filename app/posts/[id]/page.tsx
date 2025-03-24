@@ -38,7 +38,6 @@ export default function Post() {
 				onLoadMore={loadMore}
 				isLoading={isLoading}
 				hasMore={hasMore}
-				className="flex flex-col gap-y-4"
 			>
 				{replies?.map((reply) => (
 					<PostCard
@@ -50,7 +49,7 @@ export default function Post() {
 					/>
 				))}
 			</InfiniteList>
-			<NewPostButton fixedPosition={true} />
+			<NewPostButton />
 		</div>
 	);
 }
