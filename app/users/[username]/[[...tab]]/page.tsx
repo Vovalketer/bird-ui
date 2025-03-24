@@ -2,6 +2,8 @@
 import InfiniteList from "@/components/InfiniteList";
 import NewPostButton from "@/components/ui/NewPostButton";
 import PostCard from "@/components/ui/PostCard";
+import Tab from "@/components/ui/Tab";
+import TabsContainer from "@/components/ui/TabsContainer";
 import { useNewPostModal } from "@/context/NewPostModalContext";
 import { useUserInfinitePosts } from "@/lib/services/api/hooks/useUserInfinitePosts";
 import { useParams } from "next/navigation";
@@ -20,6 +22,12 @@ export default function UserPage() {
 
 	return (
 		<>
+			<TabsContainer>
+				<Tab href={`/users/${username}`}>Posts</Tab>
+				<Tab href={`/users/${username}/replies`}>Replies</Tab>
+				<Tab href={`/users/${username}/media`}>Media</Tab>
+				<Tab href={`/users/${username}/likes`}>Likes</Tab>
+			</TabsContainer>
 			<InfiniteList
 				onLoadMore={loadMore}
 				isLoading={isLoading}
