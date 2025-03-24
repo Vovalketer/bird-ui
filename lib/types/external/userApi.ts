@@ -2,6 +2,7 @@ import { ResourceIdentifier, ResourceLinks } from "./common";
 
 export interface UserResource extends ResourceIdentifier<string> {
 	attributes: UserAttributes;
+	metadata?: UserMetadata;
 	links: ResourceLinks;
 }
 
@@ -13,4 +14,11 @@ export interface UserAttributes {
 	location?: string;
 	profileImage?: string;
 	createdAt: string | Date;
+}
+
+export interface UserMetadata {
+	followCounts?: {
+		followers: number;
+		following: number;
+	};
 }

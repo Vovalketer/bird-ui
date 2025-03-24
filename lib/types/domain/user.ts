@@ -7,4 +7,6 @@ export default interface User {
 	location?: string;
 	profileImage?: string;
 	createdAt: string | Date;
+	followers?: number;
+	following?: number;
 }
