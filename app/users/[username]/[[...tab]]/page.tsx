@@ -4,7 +4,9 @@ import NewPostButton from "@/components/ui/NewPostButton";
 import PostCard from "@/components/ui/PostCard";
 import Tab from "@/components/ui/Tab";
 import TabsContainer from "@/components/ui/TabsContainer";
+import UserProfileHeader from "@/components/ui/UserProfileHeader";
 import { useNewPostModal } from "@/context/NewPostModalContext";
+import { useUserDetails } from "@/lib/services/api/hooks/useUserDetails";
 import { useUserInfinitePosts } from "@/lib/services/api/hooks/useUserInfinitePosts";
 import { useParams } from "next/navigation";
 
@@ -18,10 +20,14 @@ export default function UserPage() {
 	}
 	const { posts, likeToggle, repostToggle, loadMore, hasMore, isLoading } =
 		useUserInfinitePosts(username as string, currentTab);
+	const { user } = useUserDetails(username as string);
 	const { openModal } = useNewPostModal();
+
+	if (!user) return <div>Loading...</div>;
 
 	return (
 		<>
+			<UserProfileHeader user={user} />
 			<TabsContainer>
 				<Tab href={`/users/${username}`}>Posts</Tab>
 				<Tab href={`/users/${username}/replies`}>Replies</Tab>
