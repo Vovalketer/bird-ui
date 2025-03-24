@@ -8,9 +8,14 @@ import { useParams } from "next/navigation";
 
 export default function UserPage() {
 	// user bgaynor5h has 10 posts
-	const { username } = useParams();
+	const { username, tab } = useParams();
+	const currentTab = Array.isArray(tab) ? tab[0] : tab || "posts";
+	if (Array.isArray(tab) && tab.length > 1) {
+		//temporary measure
+		throw new Error("Invalid url");
+	}
 	const { posts, likeToggle, repostToggle, loadMore, hasMore, isLoading } =
-		useUserInfinitePosts(username as string);
+		useUserInfinitePosts(username as string, currentTab);
 	const { openModal } = useNewPostModal();
 
 	return (
