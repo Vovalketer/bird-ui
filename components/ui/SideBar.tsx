@@ -1,7 +1,7 @@
 "use client";
 import { BellIcon, HomeIcon, UserIcon } from "@heroicons/react/24/outline";
 import ThemeSwitcher from "./ThemeSwitcher";
-import SecondaryNavigationElement from "./SecondaryNavigationElement";
+import NavButton from "./NavButton";
 
 interface SidebarProps {
 	className?: string;
@@ -12,22 +12,22 @@ export default function Sidebar({ className }: SidebarProps) {
 			<nav>
 				<ul className="menu gap-y-5">
 					<li>
-						<SecondaryNavigationElement href={"/"}>
+						<NavButton href={"/"}>
 							<HomeIcon role="img" width={24} height={24} />
 							<span>Home</span>
-						</SecondaryNavigationElement>
+						</NavButton>
 					</li>
 					<li>
-						<SecondaryNavigationElement href={"/profile"}>
+						<NavButton href={"/profile"}>
 							<UserIcon role="img" width={24} height={24} />
 							<span>Profile</span>
-						</SecondaryNavigationElement>
+						</NavButton>
 					</li>
 					<li>
-						<SecondaryNavigationElement href={"/notifications"}>
+						<NavButton href={"/notifications"}>
 							<BellIcon role="img" width={24} height={24} />
 							<span>Notifications</span>
-						</SecondaryNavigationElement>
+						</NavButton>
 					</li>
 				</ul>
 			</nav>
