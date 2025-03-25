@@ -1,10 +1,10 @@
 import TextareaAutosize from "react-textarea-autosize";
-import PrimaryButton from "./base/PrimaryButton";
 import UserAvatar from "./UserAvatar";
 import submitPost from "@/lib/actions/posts/submitPost";
 import { CreatePostRequestSchema } from "@/lib/types/external/createPostRequest";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import Button from "./Button";
 
 interface ReplyTextAreaProps {
 	minRows?: number;
@@ -77,9 +77,9 @@ export default function PostComposer({
 						</select>
 					)}
 					<div className="ml-auto">
-						<PrimaryButton type="submit">
+						<Button type="submit" color="primary">
 							{isReply ? "Reply" : "Post"}
-						</PrimaryButton>
+						</Button>
 					</div>
 				</div>
 			</div>

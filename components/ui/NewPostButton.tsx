@@ -1,7 +1,7 @@
 "use client";
 import { useNewPostModal } from "@/context/NewPostModalContext";
-import PrimaryButton from "./base/PrimaryButton";
 import { useSession } from "next-auth/react";
+import Button from "./Button";
 
 export default function NewPostButton() {
 	const { openModal } = useNewPostModal();
@@ -11,13 +11,14 @@ export default function NewPostButton() {
 	}
 	return (
 		<div className="fixed bottom-4 right-4">
-			<PrimaryButton
+			<Button
+				color="primary"
 				onClick={() => {
 					openModal();
 				}}
 			>
 				+ Post
-			</PrimaryButton>
+			</Button>
 		</div>
 	);
 }
