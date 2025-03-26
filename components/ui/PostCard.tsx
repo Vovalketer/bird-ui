@@ -17,7 +17,7 @@ export default function PostCard({
 	onReply,
 }: PostCardProps) {
 	return (
-		<article className="border-2 border-light-border dark:border-dark-border">
+		<article className="border-2 border-neutral">
 			<header className="p-2">
 				<UserHeader
 					username={post.user.username}

@@ -36,9 +36,9 @@ export default function RootLayout({
 				<ThemeProvider>
 					<AuthProvider>
 						<NewPostModalProvider>
-							<SideBar className="bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary border-light-border dark:border-dark-border" />
+							<SideBar className="bg-base-300 text-base-content" />
 							<NewPostModalContainer />
-							<main className="w-full px-24 bg-light-background dark:bg-dark-background text-light-text-primary dark:text-dark-text-primary">
+							<main className="w-full px-24 bg-base-100 text-base-content">
 								{children}
 							</main>
 						</NewPostModalProvider>

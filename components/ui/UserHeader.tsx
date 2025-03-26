@@ -19,9 +19,7 @@ export default function UserHeader({
 				<UserAvatar profileImage={profileImage} />
 				<div className="flex flex-col place-content-center pl-2 text-sm">
 					<p className="font-semibold">{handle}</p>
-					<p className="text-light-text-secondary dark:text-dark-text-secondary">
-						@{username}
-					</p>
+					<p className="opacity-60">@{username}</p>
 				</div>
 			</Link>
 		</>

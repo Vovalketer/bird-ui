@@ -1,6 +1,7 @@
 import User from "@/lib/types/domain/user";
 import UserAvatar from "./UserAvatar";
 import { CakeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import Button from "./Button";
 
 interface UserCardProps {
 	user: User;
@@ -11,12 +12,10 @@ export default function UserProfileHeader({ user }: UserCardProps) {
 			<UserAvatar profileImage={user.profileImage} size={24} />
 			<div className="flex flex-col">
 				<h2 className="text-xl font-bold">{user.username}</h2>
-				<p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-					@{user.handle}
-				</p>
+				<p className="text-sm opacity-60">@{user.handle}</p>
 			</div>
 			<p>{user.bio}</p>
-			<div className="flex gap-x-6 text-light-text-secondary dark:text-dark-text-secondary">
+			<div className="flex gap-x-6 opacity-60">
 				{user.location && (
 					<p className="flex text-sm gap-x-1">
 						<MapPinIcon height={18} width={18} />
@@ -30,20 +29,17 @@ export default function UserProfileHeader({ user }: UserCardProps) {
 					</p>
 				)}
 			</div>
-			<div className="flex gap-x-6 text-light-text-secondary dark:text-dark-text-secondary">
+			<div className="flex gap-x-6 ">
 				<p>
-					<span className="font-bold text-light-text-primary dark:text-dark-text-primary">
-						{user.following}
-					</span>
+					<span className="font-bold ">{user.following}</span>
 					{" Following"}
 				</p>
 				<p>
-					<span className="font-bold text-light-text-primary dark:text-dark-text-primary">
-						{user.followers}
-					</span>
+					<span className="font-bold ">{user.followers}</span>
 					{" Followers"}
 				</p>
 			</div>
+			<Button color="secondary">Follow</Button>
 		</header>
 	);
 }
