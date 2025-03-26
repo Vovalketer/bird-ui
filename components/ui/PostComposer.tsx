@@ -10,19 +10,14 @@ interface ReplyTextAreaProps {
 	minRows?: number;
 	maxRows?: number;
 	replyingToPostId?: number;
-	borders?: boolean;
 }
 export default function PostComposer({
 	minRows,
 	maxRows,
 	replyingToPostId,
-	borders,
 }: ReplyTextAreaProps) {
 	const session = useSession();
 	const isReply = replyingToPostId !== undefined;
-	const borderClass = borders
-		? "border-2 border-light-border dark:border-dark-border"
-		: "";
 	const handlePost = async (formData: FormData) => {
 		//TODO: handle media
 		const form = {
@@ -52,7 +47,7 @@ export default function PostComposer({
 	}
 
 	return (
-		<form action={handlePost} className={`flex p-2 gap-y-4 ${borderClass}`}>
+		<form action={handlePost} className="flex p-2 gap-y-4">
 			<UserAvatar profileImage={session.data?.user.profileImage} />
 			<div className="flex flex-col w-full gap-y-4 ml-2">
 				<div className="pl-2 pr-1">

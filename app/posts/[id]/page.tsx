@@ -32,7 +32,7 @@ export default function Post() {
 				onRepost={repostToggle}
 				onReply={() => openModal(post)}
 			/>
-			<PostComposer replyingToPostId={post.id} borders={true} />
+			<PostComposer replyingToPostId={post.id} />
 			<Divider />
 			<InfiniteList
 				onLoadMore={loadMore}
