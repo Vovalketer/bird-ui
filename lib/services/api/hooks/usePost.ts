@@ -19,8 +19,8 @@ export default function usePost(postId: number | string) {
 	const {
 		data: apiData,
 		mutate,
-		isLoading,
-		isValidating,
+		isLoading: isLoadingInitialData,
+		isValidating: isLoading,
 	} = useSWR<ApiResponse<PostResource>>(`/api/posts/${postId}`, fetcher);
 	let post: Post | undefined = undefined;
 	if (apiData) {
@@ -72,7 +72,7 @@ export default function usePost(postId: number | string) {
 		post,
 		likeToggle,
 		repostToggle,
+		isLoadingInitialData,
 		isLoading,
-		isValidating,
 	};
 }
