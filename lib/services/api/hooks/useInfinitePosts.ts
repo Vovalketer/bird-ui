@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { postArrayResourceMapper } from "../../mappers/postMapper";
 import {
@@ -13,9 +13,9 @@ import {
 } from "../../mutations/repost";
 import { fetcher, likePost, repost, unlikePost, unrepost } from "../birdApi";
 import toast from "react-hot-toast";
+import Post from "@/lib/types/domain/post";
 
 export function useInfinitePosts(url: string) {
-	const [hasMore, setHasMore] = useState(true);
 	const {
 		data,
 		setSize,
@@ -34,6 +34,15 @@ export function useInfinitePosts(url: string) {
 		fetcher,
 		{ initialSize: 1 },
 	);
+	const [hasMore, setHasMore] = useState(true);
+	const [posts, setPosts] = useState<Post[] | undefined>();
+
+	useEffect(() => {
+		if (data) {
+			setPosts(data.flatMap((page) => postArrayResourceMapper(page)));
+		}
+	}, [data]);
+
 	async function executeMutation(
 		optimisticDataFn: (
 			data: ApiResponse<PostResource[]>[],
@@ -55,7 +64,6 @@ export function useInfinitePosts(url: string) {
 			}
 		}
 	}
-	const posts = data?.flatMap((page) => postArrayResourceMapper(page));
 
 	const loadMore = useCallback(() => {
 		if (!isLoading) setSize((prevSize) => prevSize + 1);
