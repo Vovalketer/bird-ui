@@ -31,11 +31,11 @@ export default function UserProfileHeader({ user }: UserCardProps) {
 			</div>
 			<div className="flex gap-x-6 ">
 				<p>
-					<span className="font-bold ">{user.following}</span>
+					<span className="font-bold ">{user.followingCount}</span>
 					{" Following"}
 				</p>
 				<p>
-					<span className="font-bold ">{user.followers}</span>
+					<span className="font-bold ">{user.followersCount}</span>
 					{" Followers"}
 				</p>
 			</div>

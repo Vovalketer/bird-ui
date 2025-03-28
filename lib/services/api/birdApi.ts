@@ -46,3 +46,11 @@ export function repost(postId: number | string) {
 export function unrepost(postId: number | string) {
 	return axiosClient.delete<null>(`/api/posts/${postId}/reposts`);
 }
+
+export function followUser(username: string) {
+	return axiosClient.post<null>(`/api/users/${username}/following`);
+}
+
+export function unfollowUser(username: string) {
+	return axiosClient.delete<null>(`/api/users/${username}/following`);
+}

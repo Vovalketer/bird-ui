@@ -17,7 +17,9 @@ export function userMapper(user: UserResource): User {
 		location: user.attributes.location,
 		profileImage: user.attributes.profileImage,
 		createdAt: user.attributes.createdAt,
-		followers: user.metadata?.followCounts?.followers,
-		following: user.metadata?.followCounts?.following,
+		followersCount: user.metadata?.followCounts?.followers,
+		followingCount: user.metadata?.followCounts?.following,
+		isFollowing: user.metadata?.userInteractions?.isFollowing,
+		isFollowedBy: user.metadata?.userInteractions?.isFollowedBy,
 	};
 }
