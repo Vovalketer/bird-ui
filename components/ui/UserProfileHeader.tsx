@@ -1,14 +1,18 @@
 import User from "@/lib/types/domain/user";
 import UserAvatar from "./UserAvatar";
 import { CakeIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import Button from "./Button";
+import FollowButton from "./FollowButton";
 
-interface UserCardProps {
+interface UserProfileHeaderProps {
 	user: User;
+	onFollow?: () => void;
 }
-export default function UserProfileHeader({ user }: UserCardProps) {
+export default function UserProfileHeader({
+	user,
+	onFollow,
+}: UserProfileHeaderProps) {
 	return (
-		<header className="flex flex-col gap-y-2">
+		<header className="relative flex flex-col gap-y-2">
 			<UserAvatar profileImage={user.profileImage} size={24} />
 			<div className="flex flex-col">
 				<h2 className="text-xl font-bold">{user.username}</h2>
@@ -39,7 +43,11 @@ export default function UserProfileHeader({ user }: UserCardProps) {
 					{" Followers"}
 				</p>
 			</div>
-			<Button color="secondary">Follow</Button>
+			{user.isFollowing !== undefined ? (
+				<div className="absolute top-2 right-2">
+					<FollowButton isFollowing={user.isFollowing} onClick={onFollow} />
+				</div>
+			) : null}
 		</header>
 	);
 }
