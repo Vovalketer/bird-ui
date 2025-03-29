@@ -1,7 +1,7 @@
 "use client";
 import InfiniteList from "@/components/InfiniteList";
 import NewPostButton from "@/components/ui/NewPostButton";
-import PostCard from "@/components/ui/PostCard";
+import PostView from "@/components/ui/PostView";
 import Tab from "@/components/ui/Tab";
 import TabsContainer from "@/components/ui/TabsContainer";
 import UserProfileHeaderContainer from "@/components/UserProfileHeaderContainer";
@@ -36,7 +36,7 @@ export default function UserPage() {
 				hasMore={hasMore}
 			>
 				{posts?.map((post) => (
-					<PostCard
+					<PostView
 						key={post.id}
 						post={post}
 						onLike={() => likeToggle(post.id)}

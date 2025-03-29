@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, within } from "@testing-library/react";
-import PostCard from "../PostCard";
+import PostView from "../PostView";
 import Post from "@/lib/types/domain/post";
 
 const mockPostWithoutUserInteractions: Post = {
@@ -47,11 +47,11 @@ const mockPostWithUserInteractionsAndNoProfileImage: Post = {
 };
 
 const renderPostCardWithoutUserInteractions = () => {
-	render(<PostCard post={mockPostWithoutUserInteractions} />);
+	render(<PostView post={mockPostWithoutUserInteractions} />);
 };
 
 const renderPostCardWithUserInteractionsAndNoProfileImage = () => {
-	render(<PostCard post={mockPostWithUserInteractionsAndNoProfileImage} />);
+	render(<PostView post={mockPostWithUserInteractionsAndNoProfileImage} />);
 };
 
 describe("PostCard non liked or reposted", () => {

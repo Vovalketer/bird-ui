@@ -2,7 +2,7 @@
 import InfiniteList from "@/components/InfiniteList";
 import Divider from "@/components/ui/Divider";
 import NewPostButton from "@/components/ui/NewPostButton";
-import PostCard from "@/components/ui/PostCard";
+import PostView from "@/components/ui/PostView";
 import PostComposer from "@/components/ui/PostComposer";
 import { useNewPostModal } from "@/context/NewPostModalContext";
 import usePost from "@/lib/services/api/hooks/usePost";
@@ -25,7 +25,7 @@ export default function Post() {
 	if (!post) return null;
 	return (
 		<div className="flex flex-col gap-y-4">
-			<PostCard
+			<PostView
 				key={post.id}
 				post={post}
 				onLike={likeToggle}
@@ -40,7 +40,7 @@ export default function Post() {
 				hasMore={hasMore}
 			>
 				{replies?.map((reply) => (
-					<PostCard
+					<PostView
 						key={reply.id}
 						post={reply}
 						onLike={() => replyLikeToggle(reply.id)}

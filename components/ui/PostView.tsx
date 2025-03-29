@@ -10,7 +10,7 @@ interface PostCardProps {
 	onReply?: () => void;
 }
 
-export default function PostCard({
+export default function PostView({
 	post,
 	onLike,
 	onRepost,
