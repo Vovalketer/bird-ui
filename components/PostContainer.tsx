@@ -1,5 +1,4 @@
 import usePost from "@/lib/services/api/hooks/usePost";
-import PostComposer from "./ui/PostComposer";
 import PostView from "./ui/PostView";
 import { useNewPostModal } from "@/context/NewPostModalContext";
 
@@ -19,7 +18,6 @@ export default function PostContainer({ id }: PostContainerProps) {
 				onRepost={repostToggle}
 				onReply={() => openModal(post)}
 			/>
-			<PostComposer replyingToPostId={post.id} />
 		</>
 	);
 }

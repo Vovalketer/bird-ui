@@ -3,6 +3,7 @@ import InfiniteList from "@/components/InfiniteList";
 import PostContainer from "@/components/PostContainer";
 import Divider from "@/components/ui/Divider";
 import NewPostButton from "@/components/ui/NewPostButton";
+import PostComposer from "@/components/ui/PostComposer";
 import PostView from "@/components/ui/PostView";
 import { useNewPostModal } from "@/context/NewPostModalContext";
 import useReplies from "@/lib/services/api/hooks/useReplies";
@@ -24,6 +25,7 @@ export default function Post() {
 	return (
 		<div className="flex flex-col gap-y-4">
 			<PostContainer id={id as string} />
+			<PostComposer replyingToPostId={id as string} />
 			<Divider />
 			<InfiniteList
 				onLoadMore={loadMore}
