@@ -60,6 +60,7 @@ function postMapper(
 			isLiked: userInteractions ? userInteractions.isLiked : false,
 			isReposted: userInteractions ? userInteractions.isReposted : false,
 		},
+		parentId: postResource.relationships.parentPost?.data?.id || undefined,
 		user: user,
 		media: media,
 	};

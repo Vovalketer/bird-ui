@@ -8,6 +8,7 @@ export default interface Post {
 	createdAt: string | Date;
 	user: User;
 	media?: Media[];
+	parentId?: number;
 	interactions: Interactions;
 }
 
