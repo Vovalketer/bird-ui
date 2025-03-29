@@ -20,7 +20,7 @@ interface PostAttributes {
 
 interface PostRelationships {
 	user: RelationshipToOne<string>;
-	parent?: RelationshipToOne<number>;
+	parentPost?: RelationshipToOne<number>;
 	media?: RelationshipToMany<number>;
 }
 
