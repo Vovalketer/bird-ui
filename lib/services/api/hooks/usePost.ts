@@ -4,6 +4,7 @@ import { ApiResponse } from "@/lib/types/external/common";
 import { PostResource } from "@/lib/types/external/postApi";
 import toast from "react-hot-toast";
 import useSWR from "swr";
+import { useEffect, useState } from "react";
 import { postResourceMapper } from "../../mappers/postMapper";
 import {
 	likeOptimisticData,
@@ -22,10 +23,13 @@ export default function usePost(postId: number | string) {
 		isLoading: isLoadingInitialData,
 		isValidating: isLoading,
 	} = useSWR<ApiResponse<PostResource>>(`/api/posts/${postId}`, fetcher);
-	let post: Post | undefined = undefined;
-	if (apiData) {
-		post = postResourceMapper(apiData);
-	}
+	const [post, setPost] = useState<Post | undefined>();
+
+	useEffect(() => {
+		if (apiData) {
+			setPost(postResourceMapper(apiData));
+		}
+	}, [apiData]);
 
 	async function executeMutation(
 		optimisticDataFn: (
