@@ -9,7 +9,7 @@ import Button from "./Button";
 interface ReplyTextAreaProps {
 	minRows?: number;
 	maxRows?: number;
-	replyingToPostId?: number;
+	replyingToPostId?: number | string;
 }
 export default function PostComposer({
 	minRows,
