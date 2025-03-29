@@ -23,8 +23,13 @@ describe("postMapper", () => {
 				bio: undefined,
 				dateOfBirth: undefined,
 				location: undefined,
+				followersCount: 4,
+				followingCount: 2,
+				isFollowing: true,
+				isFollowedBy: true,
 			},
 			media: undefined,
+			parentId: 10,
 			interactions: {
 				likesCount: 1,
 				repostsCount: 1,
@@ -52,8 +57,13 @@ describe("postMapper", () => {
 				bio: undefined,
 				dateOfBirth: undefined,
 				location: undefined,
+				followersCount: 3,
+				followingCount: 1,
+				isFollowing: true,
+				isFollowedBy: true,
 			},
 			media: undefined,
+			parentId: 10,
 			interactions: {
 				likesCount: 1,
 				repostsCount: 1,
@@ -76,8 +86,13 @@ describe("postMapper", () => {
 				bio: undefined,
 				dateOfBirth: undefined,
 				location: undefined,
+				followersCount: 3,
+				followingCount: 1,
+				isFollowing: true,
+				isFollowedBy: true,
 			},
 			media: undefined,
+			parentId: 10,
 			interactions: {
 				likesCount: 1,
 				repostsCount: 1,
@@ -107,6 +122,10 @@ const postResource1: PostResource = {
 			links: {
 				self: "https://api.birdsite.dev/api/v1/users/785cdd7a-8d0e-4e9c-9f3f-3195e3eb1c42",
 			},
+		},
+		parentPost: {
+			data: { id: 10, type: "posts" },
+			links: { self: "https://api.birdsite.dev/api/v1/posts/1" },
 		},
 	},
 	metadata: {
@@ -138,6 +157,10 @@ const postResource2: PostResource = {
 			links: {
 				self: "https://api.birdsite.dev/api/v1/users/785cdd7a-8d0e-4e9c-9f3f-3195e3eb1c42",
 			},
+		},
+		parentPost: {
+			data: { id: 10, type: "posts" },
+			links: { self: "https://api.birdsite.dev/api/v1/posts/1" },
 		},
 	},
 	metadata: {
@@ -177,6 +200,15 @@ const apiPost: ApiResponse<PostResource> = {
 				links: {
 					self: "https://api.birdsite.dev/api/v1/users/785cdd7a-8d0e-4e9c-9f3f-3195e3eb1c42",
 				},
+				metadata: {
+					followCounts: { followers: 4, following: 2 },
+					userInteractions: {
+						isFollowing: true,
+						followedAt: "2023-01-01T00:00:00.000Z",
+						isFollowedBy: true,
+						followedByAt: "2023-01-01T00:00:00.000Z",
+					},
+				},
 			},
 		],
 	},
@@ -206,6 +238,15 @@ const apiPosts: ApiResponse<PostResource[]> = {
 				},
 				links: {
 					self: "https://api.birdsite.dev/api/v1/users/785cdd7a-8d0e-4e9c-9f3f-3195e3eb1c42",
+				},
+				metadata: {
+					followCounts: { followers: 3, following: 1 },
+					userInteractions: {
+						isFollowing: true,
+						followedAt: "2023-01-01T00:00:00.000Z",
+						isFollowedBy: true,
+						followedByAt: "2023-01-01T00:00:00.000Z",
+					},
 				},
 			},
 		],
