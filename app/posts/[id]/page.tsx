@@ -1,17 +1,15 @@
 "use client";
 import InfiniteList from "@/components/InfiniteList";
+import PostContainer from "@/components/PostContainer";
 import Divider from "@/components/ui/Divider";
 import NewPostButton from "@/components/ui/NewPostButton";
 import PostView from "@/components/ui/PostView";
-import PostComposer from "@/components/ui/PostComposer";
 import { useNewPostModal } from "@/context/NewPostModalContext";
-import usePost from "@/lib/services/api/hooks/usePost";
 import useReplies from "@/lib/services/api/hooks/useReplies";
 import { useParams } from "next/navigation";
 
 export default function Post() {
 	const { id } = useParams();
-	const { post, likeToggle, repostToggle } = usePost(id as string);
 	const {
 		posts: replies,
 		likeToggle: replyLikeToggle,
@@ -22,17 +20,10 @@ export default function Post() {
 	} = useReplies(id as string);
 	const { openModal } = useNewPostModal();
 
-	if (!post) return null;
+	//TODO: if the post is a reply, show the parent post
 	return (
 		<div className="flex flex-col gap-y-4">
-			<PostView
-				key={post.id}
-				post={post}
-				onLike={likeToggle}
-				onRepost={repostToggle}
-				onReply={() => openModal(post)}
-			/>
-			<PostComposer replyingToPostId={post.id} />
+			<PostContainer id={id as string} />
 			<Divider />
 			<InfiniteList
 				onLoadMore={loadMore}
