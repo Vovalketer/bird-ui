@@ -11,6 +11,7 @@ export default function PostContainer({ id }: PostContainerProps) {
 	if (!post) return null;
 	return (
 		<>
+			{post.parentId && <PostContainer id={post.parentId} />}
 			<PostView
 				key={post.id}
 				post={post}
