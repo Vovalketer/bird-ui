@@ -11,15 +11,19 @@ export default function ThemeSwitcher() {
 		setMounted(true);
 	}, []);
 	//TODO: return placeholder instead of null
-	return mounted ? (
-		resolvedTheme === "dark" ? (
-			<Button color="secondary" onClick={() => setTheme("light")}>
-				<SunIcon role="img" width={24} height={24} />
-			</Button>
-		) : (
-			<Button color="secondary" onClick={() => setTheme("dark")}>
-				<MoonIcon role="img" width={24} height={24} />
-			</Button>
-		)
-	) : null;
+	if (!mounted) return null;
+
+	const isDark = resolvedTheme === "dark";
+	return (
+		<Button
+			color="secondary"
+			onClick={() => (isDark ? setTheme("light") : setTheme("dark"))}
+		>
+			{isDark ? (
+				<SunIcon data-testid={"sunIcon"} role="img" width={24} height={24} />
+			) : (
+				<MoonIcon data-testid={"moonIcon"} role="img" width={24} height={24} />
+			)}
+		</Button>
+	);
 }
