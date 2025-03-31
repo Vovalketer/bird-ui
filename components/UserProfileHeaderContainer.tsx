@@ -10,6 +10,6 @@ export default function UserProfileHeaderContainer({
 	const { user, toggleFollow } = useUserDetails(username);
 	//TODO: display placeholder if the user is not available
 	return user ? (
-		<UserProfileHeader user={user} onFollow={toggleFollow} />
+		<UserProfileHeader user={user} onFollowToggle={toggleFollow} />
 	) : null;
 }

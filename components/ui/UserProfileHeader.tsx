@@ -5,11 +5,11 @@ import FollowButton from "./FollowButton";
 
 interface UserProfileHeaderProps {
 	user: User;
-	onFollow?: () => void;
+	onFollowToggle?: () => void;
 }
 export default function UserProfileHeader({
 	user,
-	onFollow,
+	onFollowToggle: onFollowToggle,
 }: UserProfileHeaderProps) {
 	return (
 		<header className="relative flex flex-col gap-y-2">
@@ -45,7 +45,10 @@ export default function UserProfileHeader({
 			</div>
 			{user.isFollowing !== undefined ? (
 				<div className="absolute top-2 right-2">
-					<FollowButton isFollowing={user.isFollowing} onClick={onFollow} />
+					<FollowButton
+						isFollowing={user.isFollowing}
+						onClick={onFollowToggle}
+					/>
 				</div>
 			) : null}
 		</header>
