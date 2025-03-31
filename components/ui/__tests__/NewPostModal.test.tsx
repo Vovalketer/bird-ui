@@ -1,7 +1,9 @@
 import Post from "@/lib/types/domain/post";
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import NewPostModal from "../NewPostModal";
+import { NewPostModalProvider } from "@/context/NewPostModalContext";
+import { SessionProvider } from "next-auth/react";
 
 // workaround since jsdom doesn't support HTMLDialogElement, issue #3294
 HTMLDialogElement.prototype.show = jest.fn(function () {
@@ -15,6 +17,43 @@ HTMLDialogElement.prototype.showModal = jest.fn(function () {
 HTMLDialogElement.prototype.close = jest.fn(function () {
 	this.open = false;
 });
+
+beforeAll(() => {
+	global.fetch = jest.fn(() =>
+		Promise.resolve(
+			new Response(
+				JSON.stringify({
+					user: {
+						id: "123",
+						username: "testUser",
+						handle: "testHandle",
+						profileImage: "https://example.com/postProfileImage.jpg",
+					},
+					expires: new Date(Date.now() + 3600 * 1000).toISOString(), // Add expires
+				}),
+				{
+					status: 200,
+					statusText: "OK",
+					headers: { "Content-Type": "application/json" },
+				},
+			),
+		),
+	);
+});
+afterEach(() => {
+	jest.clearAllMocks();
+});
+
+const sessionMock = {
+	user: {
+		id: "123",
+		username: "testUser",
+		handle: "testHandle",
+		profileImage: "https://example.com/signedInUser.jpg",
+	},
+	accessToken: "testAccessToken",
+	expires: new Date(Date.now() + 3600 * 1000).toISOString(), // Add expires
+};
 
 const mockPost: Post = {
 	id: 1,
@@ -38,12 +77,28 @@ const mockPost: Post = {
 	media: [],
 };
 
-const renderOpenNewPostModal = () => {
-	render(<NewPostModal isOpen={true} onClose={() => {}} />);
+const renderOpenNewPostModal = async () => {
+	await act(() =>
+		render(
+			<SessionProvider session={sessionMock}>
+				<NewPostModalProvider>
+					<NewPostModal isOpen={true} onClose={() => {}} />
+				</NewPostModalProvider>
+			</SessionProvider>,
+		),
+	);
 };
 
-const renderOpenNewPostModalWithPost = () => {
-	render(<NewPostModal isOpen={true} onClose={() => {}} post={mockPost} />);
+const renderOpenNewPostModalWithPost = async () => {
+	await act(() =>
+		render(
+			<SessionProvider session={sessionMock}>
+				<NewPostModalProvider>
+					<NewPostModal isOpen={true} onClose={() => {}} post={mockPost} />
+				</NewPostModalProvider>
+			</SessionProvider>,
+		),
+	);
 };
 
 describe("NewPostModal", () => {
@@ -58,14 +113,7 @@ describe("NewPostModal", () => {
 	});
 
 	it("should render the user avatars", () => {
-		render(
-			<NewPostModal
-				isOpen={true}
-				onClose={() => {}}
-				post={mockPost}
-				profileImage="https://example.com/signedInUser.jpg"
-			/>,
-		);
+		renderOpenNewPostModalWithPost();
 		const userAvatars = screen.getAllByAltText("profile image");
 		expect(userAvatars).toHaveLength(2);
 		expect(userAvatars[0]).toBeInTheDocument();
